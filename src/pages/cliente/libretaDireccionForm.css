@@ -1,0 +1,13 @@
+.modal-libreta .ant-modal-body{
+    padding: 0px;
+}
+
+.envio-formulario .ant-form-item-control-input-content{
+    margin-top: 15px;
+    margin-bottom: 15px;
+    padding-left: 24px;
+}
+
+.card-libreta-direcciones .ant-card-body{
+    padding-bottom: 0px;
+}

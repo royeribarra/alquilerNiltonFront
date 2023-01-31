@@ -42,6 +42,8 @@ function App() {
           <Route exact path="/crear-cliente" component={ClienteForm} />
 
           {/* <Redirect from="*" to="/dashboard" /> */}
+          {/* <Redirect from="**" to={`/dashboard`} />
+          <Redirect from="" to={`/dashboard`} /> */}
         </Main>
       </Switch>
     </div>

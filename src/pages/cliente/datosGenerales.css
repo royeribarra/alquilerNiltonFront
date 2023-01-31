@@ -23,3 +23,7 @@
 .tab-creacion-cliente .ant-tabs-nav{
     padding-left: 15px;
 }
+
+.input-numerico{
+    width: 100%;
+}

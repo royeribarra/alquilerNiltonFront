@@ -52,9 +52,6 @@ function ClienteForm()
             </TabPane>
           ))}
         </Tabs>
-        <div className="form-cliente">
-          
-        </div>
       </Card>
     </div>
   );

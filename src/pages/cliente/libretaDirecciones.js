@@ -12,24 +12,29 @@ const { Title } = Typography;
 
 const columns = [
   {
-    title: "AUTHOR",
-    dataIndex: "name",
-    key: "name",
+    title: "NOMBRE COMPLETO",
+    dataIndex: "nombres",
+    key: "nombres",
     width: "32%",
   },
   {
-    title: "FUNCTION",
-    dataIndex: "function",
-    key: "function",
+    title: "TELÉFONO",
+    dataIndex: "telefono",
+    key: "telefono",
   },
 
   {
-    title: "STATUS",
-    key: "status",
-    dataIndex: "status",
+    title: "DIRECCIÓN",
+    key: "direccion",
+    dataIndex: "direccion",
   },
   {
-    title: "EMPLOYED",
+    title: "EDITAR",
+    key: "function",
+    dataIndex: "function",
+  },
+  {
+    title: "ELIMINAR",
     key: "employed",
     dataIndex: "employed",
   },
