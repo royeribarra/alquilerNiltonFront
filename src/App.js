@@ -22,6 +22,7 @@ import "antd/dist/antd.css";
 import "./assets/styles/main.css";
 import "./assets/styles/responsive.css";
 import Clientes from "./pages/cliente/clientes";
+import ClienteForm from "./pages/cliente/clienteForm";
 
 function App() {
   return (
@@ -37,8 +38,9 @@ function App() {
           <Route exact path="/profile" component={Profile} />
 
           <Route exact path="/clientes" component={Clientes} />
-
-          <Redirect from="*" to="/dashboard" />
+          <Route exact path="/cliente/:clienteId" component={ClienteForm} />
+          <Route exact path="/crear-cliente" component={ClienteForm} />
+          {/* <Redirect from="*" to="/dashboard" /> */}
         </Main>
       </Switch>
     </div>
