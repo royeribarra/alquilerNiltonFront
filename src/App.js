@@ -40,6 +40,7 @@ function App() {
           <Route exact path="/clientes" component={Clientes} />
           <Route exact path="/cliente/:clienteId" component={ClienteForm} />
           <Route exact path="/crear-cliente" component={ClienteForm} />
+
           {/* <Redirect from="*" to="/dashboard" /> */}
         </Main>
       </Switch>

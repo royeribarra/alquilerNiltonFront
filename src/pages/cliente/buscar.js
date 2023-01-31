@@ -1,13 +1,6 @@
 import React from "react";
 import {
-  Row,
-  Col,
   Card,
-  Radio,
-  Table,
-  Upload,
-  message,
-  Progress,
   Button,
   Input,
   Form

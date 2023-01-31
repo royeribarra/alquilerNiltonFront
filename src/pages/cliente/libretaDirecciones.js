@@ -1,13 +1,12 @@
 import React, { useState } from "react";
-import { NavLink } from "react-router-dom";
 import {
-  Card,
+  Avatar,
   Table,
   Button,
-  Avatar,
   Typography,
 } from "antd";
-import Buscar from "./buscar";
+import "./libretaDirecciones.css";
+import LibretaDireccionForm from "./libretaDireccionForm";
 
 const { Title } = Typography;
 
@@ -36,7 +35,7 @@ const columns = [
   },
 ];
 
-const data1 = [
+const data = [
   {
     key: "1",
     name: (
@@ -294,39 +293,30 @@ const data1 = [
   },
 ];
 
-function Clientes()
+function LibretaDirecciones()
 {
-  const[data, setData] = useState([]);
-  const onChange = (e) => console.log(`radio checked:${e.target.value}`);
+  const [showModal, setShowModal] = useState(false);
 
-  
+  const openModal = () => {
+    setShowModal(true);
+  };
 
   return(
-    <div>
-      <Buscar />
-      <Card
-        bordered={false}
-        className="criclebox tablespace mb-24"
-        title="Tabla de clientes"
-        extra={
-          <>
-            <NavLink to="/crear-cliente">
-              <Button>Crear cliente</Button>
-            </NavLink>
-          </>
-        }
-      >
-        <div className="table-responsive">
-          <Table
-            columns={columns}
-            dataSource={data1}
-            pagination={false}
-            className="ant-border-space"
-          />
-        </div>
-      </Card>
-    </div>
+    <>
+      <Button className="crear-direccion-cliente" onClick={openModal}>Agregar una dirección</Button>
+      <LibretaDireccionForm 
+        status={showModal}
+        handleClose={setShowModal} 
+      />
+      <Table
+        columns={columns}
+        dataSource={data}
+        pagination={false}
+        className="ant-border-space"
+      />
+    </>
+    
   );
 }
 
-export default Clientes;
+export default LibretaDirecciones;

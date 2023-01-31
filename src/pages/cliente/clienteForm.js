@@ -1,22 +1,38 @@
 import React from "react";
-import { NavLink } from "react-router-dom";
+
 import {
-  Row,
-  Col,
   Card,
-  Radio,
-  Table,
-  Upload,
-  message,
-  Progress,
-  Button,
-  Form,
-  Input,
+  Tabs
 } from "antd";
 import "./clienteForm.css";
+import DatosGenerales from "./datosGenerales";
+import LibretaDirecciones from "./libretaDirecciones";
+
+const {TabPane} = Tabs;
 
 function ClienteForm()
 {
+  const onChange = (key) => {
+    console.log(key);
+  };
+  const items = [
+    {
+      key: '1',
+      label: `Datos generales`,
+      children: <DatosGenerales />,
+    },
+    {
+      key: '2',
+      label: `Libreta de direcciones`,
+      children: <LibretaDirecciones />,
+    },
+    {
+      key: '3',
+      label: `Tab 3`,
+      children: `Content of Tab Pane 3`,
+    },
+  ];
+  
   return(
     <div className="tabled">
       <Card
@@ -29,162 +45,15 @@ function ClienteForm()
           </>
         }
       >
+        <Tabs defaultActiveKey="1" onChange={onChange} className="tab-creacion-cliente">
+          {items.map(({ key, label, children }) => (
+            <TabPane tab={label} key={key}>
+              {children}
+            </TabPane>
+          ))}
+        </Tabs>
         <div className="form-cliente">
-          <Form
-            layout="vertical"
-            className="row-col"
-          >
-            <Card type="inner" title="Datos Generales" className="card-datos-generales">
-              <div className="body-card-generales">
-                <Form.Item
-                  className="username"
-                  label="Nombres"
-                  name="email"
-                  rules={[
-                    {
-                      required: true,
-                      message: "Please input your email!",
-                    },
-                  ]}
-                >
-                  <Input placeholder="Email" />
-                </Form.Item>
-                <Form.Item
-                  className="username"
-                  label="Apellidos"
-                  name="email"
-                  rules={[
-                    {
-                      required: true,
-                      message: "Please input your email!",
-                    },
-                  ]}
-                >
-                  <Input placeholder="Email" />
-                </Form.Item>
-                <Form.Item
-                  className="username"
-                  label="Nombre de empresa"
-                  name="email"
-                  rules={[
-                    {
-                      required: true,
-                      message: "Please input your email!",
-                    },
-                  ]}
-                >
-                  <Input placeholder="Email" />
-                </Form.Item>
-                <Form.Item
-                  className="username"
-                  label="Correo electrónico"
-                  name="email"
-                  rules={[
-                    {
-                      required: true,
-                      message: "Please input your email!",
-                    },
-                  ]}
-                >
-                  <Input placeholder="Email" />
-                </Form.Item>
-                <Form.Item
-                  className="username"
-                  label="Grupo de clientes"
-                  name="email"
-                  rules={[
-                    {
-                      required: true,
-                      message: "Please input your email!",
-                    },
-                  ]}
-                >
-                  <Input placeholder="Email" />
-                </Form.Item>
-                <Form.Item
-                  className="username"
-                  label="Número de teléfono"
-                  name="email"
-                  rules={[
-                    {
-                      required: true,
-                      message: "Please input your email!",
-                    },
-                  ]}
-                >
-                  <Input placeholder="Email" />
-                </Form.Item>
-                <Form.Item
-                  className="username"
-                  label="Crédito en la tienda"
-                  name="email"
-                  rules={[
-                    {
-                      required: true,
-                      message: "Please input your email!",
-                    },
-                  ]}
-                >
-                  <Input placeholder="Email" />
-                </Form.Item>
-                <Form.Item
-                  className="username"
-                  label="Profesión u oficio"
-                  name="email"
-                  rules={[
-                    {
-                      required: true,
-                      message: "Please input your email!",
-                    },
-                  ]}
-                >
-                  <Input placeholder="Email" />
-                </Form.Item>
-              </div>
-            </Card>
-            <Card type="inner" title="Documento de identificación" className="card-identificacion">
-              <div className="body-card-identificacion">
-                <Form.Item
-                  className="username"
-                  label="Número de documento"
-                  name="email"
-                  rules={[
-                    {
-                      required: true,
-                      message: "Please input your email!",
-                    },
-                  ]}
-                >
-                  <Input placeholder="Email" />
-                </Form.Item>
-                <Form.Item
-                  className="username"
-                  label="Tipo de documento"
-                  name="email"
-                  rules={[
-                    {
-                      required: true,
-                      message: "Please input your email!",
-                    },
-                  ]}
-                >
-                  <Input placeholder="Email" />
-                </Form.Item>
-              </div>
-            </Card>
-            <Form.Item>
-              <Button
-                type="primary"
-                htmlType="submit"
-                className="guardar-cliente"
-              >
-                Guardar
-              </Button>
-              <NavLink to="/clientes">
-                <Button type="danger">Cancelar</Button>
-              </NavLink>
-            </Form.Item>
-          </Form>
+          
         </div>
       </Card>
     </div>
