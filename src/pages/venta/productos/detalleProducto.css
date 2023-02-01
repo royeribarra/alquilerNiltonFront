@@ -1,0 +1,25 @@
+.card-detalle-producto .ant-card-head{
+    min-height: auto;
+    font-size: 14px;
+    background-color: rgb(241, 170, 123);
+}
+
+.card-detalle-producto .ant-card-head-wrapper{
+    min-height: auto;
+}
+
+.card-detalle-producto .ant-card-head-title{
+    padding-top: 8px;
+    padding-bottom: 8px;
+}
+
+.item-form-detalle{
+    padding: 2px !important;
+}
+
+.form-control-detalle{
+    height: 30px;
+    padding-top: 0px;
+    padding-bottom: 0px;
+    border-radius: 0px;
+}

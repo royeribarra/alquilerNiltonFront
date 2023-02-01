@@ -1,6 +1,7 @@
 .card-lista-productos .ant-card-head{
     min-height: auto;
     font-size: 14px;
+    background-color: rgb(94, 235, 81);
 }
 
 .card-lista-productos .ant-card-head-wrapper{
