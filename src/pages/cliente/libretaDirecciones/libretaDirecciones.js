@@ -6,7 +6,7 @@ import {
   Typography,
 } from "antd";
 import "./libretaDirecciones.css";
-import LibretaDireccionForm from "./libretaDireccionForm";
+import LibretaDireccionForm from "../libretaDireccionForm/libretaDireccionForm";
 import { NavLink } from "react-router-dom";
 
 const { Title } = Typography;

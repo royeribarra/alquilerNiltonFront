@@ -10,7 +10,6 @@ import {
   Col,
   InputNumber
 } from "antd";
-import "./libretaDirecciones.css";
 import "./libretaDireccionForm.css";
 
 function LibretaDireccionForm({status, handleClose})

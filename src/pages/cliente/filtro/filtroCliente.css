@@ -1,0 +1,26 @@
+.card-filtro-cliente{
+    margin-bottom: 10px;
+}
+
+.cliente-todos{
+    margin-right: 5px;
+    background-color: honeydew;
+}
+
+.cliente-visibles{
+    margin-left: 5px;
+    margin-right: 5px;
+    background-color: honeydew;
+}
+
+.cliente-no-visibles{
+    margin-left: 5px;
+    margin-right: 5px;
+    background-color: honeydew;
+}
+
+.cliente-lista-negra{
+    margin-left: 5px;
+    margin-right: 5px;
+    background-color: honeydew;
+}

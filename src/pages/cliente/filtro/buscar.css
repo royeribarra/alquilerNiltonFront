@@ -1,0 +1,45 @@
+.card-buscar-cliente{
+    margin-bottom: 10px;
+}
+
+.card-buscar-cliente .ant-card-body{
+    display: flex;
+    padding-top: 10px !important;
+    padding-bottom: 10px !important;
+    flex-wrap: wrap;
+}
+
+.bloque-buscar{
+    margin-right: 10px;
+}
+
+.eliminar-cliente .ant-btn{
+    font-size: 20px;
+    color: red;
+}
+
+.cambiar-tipo .ant-select-selector{
+    height: 40px !important;
+    border-radius: 6px !important;
+}
+
+.buscar-cliente .ant-input-affix-wrapper{
+    border-top-left-radius: 6px !important;
+    border-bottom-left-radius: 6px !important;
+    height: 40px;
+}
+
+.buscar-cliente .ant-input-affix-wrapper .ant-input{
+    height: 30px;
+}
+
+.buscar-cliente .ant-input-search-button{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.buscar-cliente .anticon-search{
+    display: block;
+}
+

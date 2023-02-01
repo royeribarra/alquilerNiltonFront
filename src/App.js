@@ -22,7 +22,7 @@ import "antd/dist/antd.css";
 import "./assets/styles/main.css";
 import "./assets/styles/responsive.css";
 import Clientes from "./pages/cliente/clientes";
-import ClienteForm from "./pages/cliente/clienteForm";
+import ClienteForm from "./pages/cliente/clienteForm/clienteForm";
 import Productos from "./pages/producto/productos";
 import ProductoForm from "./pages/producto/productoForm";
 import Ventas from "./pages/venta/ventas";

@@ -5,8 +5,8 @@ import {
   Tabs
 } from "antd";
 import "./clienteForm.css";
-import DatosGenerales from "./datosGenerales";
-import LibretaDirecciones from "./libretaDirecciones";
+import DatosGenerales from "../datosGenerales/datosGenerales";
+import LibretaDirecciones from "../libretaDirecciones/libretaDirecciones";
 
 const {TabPane} = Tabs;
 
