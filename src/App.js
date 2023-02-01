@@ -23,6 +23,10 @@ import "./assets/styles/main.css";
 import "./assets/styles/responsive.css";
 import Clientes from "./pages/cliente/clientes";
 import ClienteForm from "./pages/cliente/clienteForm";
+import Productos from "./pages/producto/productos";
+import ProductoForm from "./pages/producto/productoForm";
+import Ventas from "./pages/venta/ventas";
+import CrearVenta from "./pages/venta/crearVenta";
 
 function App() {
   return (
@@ -40,6 +44,13 @@ function App() {
           <Route exact path="/clientes" component={Clientes} />
           <Route exact path="/cliente/:clienteId" component={ClienteForm} />
           <Route exact path="/crear-cliente" component={ClienteForm} />
+
+          <Route exact path="/ventas" component={Ventas} />
+          <Route exact path="/crear-venta" component={CrearVenta} />
+
+          <Route exact path="/productos" component={Productos} />
+          <Route exact path="/producto/:productoId" component={ProductoForm} />
+          <Route exact path="/crear-producto" component={ProductoForm} />
 
           {/* <Redirect from="*" to="/dashboard" /> */}
           {/* <Redirect from="**" to={`/dashboard`} />
