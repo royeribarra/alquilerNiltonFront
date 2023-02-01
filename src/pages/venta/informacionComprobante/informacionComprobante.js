@@ -6,7 +6,9 @@ import {
   Input,
   DatePicker,
   Card,
-  Row
+  Row,
+  Select,
+  Radio
 } from "antd";
 import "./informacionComprobante.css";
 
@@ -19,30 +21,20 @@ function InformacionComprobante()
   return(
     <Form
       layout="vertical"
-      className="row-col"
+      className="form-info-comprobante"
       onFinish={onFinish}
       initialValues={{
         clienteGrupoId: "1",
-        profesionId: "1",
+        montoPagado: "1",
         credito: "1.00",
-        tipoDocumento: "1"
+        tipoDocumento: "1",
+        moneda: "1",
       }}
     >
       <Card type="inner" className="card-informacion-comprobante" title="Información comprobante">
-        <div className="body-card-generales">
-          <Row 
-            gutter={{
-              xs: 8,
-              sm: 16,
-              md: 24,
-              lg: 32,
-            }}
-          >
-            <Col 
-              className="gutter-row" 
-              xs={24}
-              md={12}
-            >
+        <div>
+          <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
+            <Col className="gutter-row item-form-comprobante" xs={24} md={12}>
               <Form.Item
                 name="fecha"
                 rules={[
@@ -55,11 +47,7 @@ function InformacionComprobante()
                 <DatePicker />
               </Form.Item>
             </Col>
-            <Col 
-              className="gutter-row" 
-              xs={24}
-              md={12}
-            >
+            <Col className="gutter-row item-form-comprobante" xs={24} md={12}>
               <Form.Item
                 name="moneda"
                 rules={[
@@ -69,52 +57,31 @@ function InformacionComprobante()
                   },
                 ]}
               >
-                <Input placeholder="Ejm: Lopez Clemente" />
+                <Select>
+                  <Select.Option value="1">NUEVO SOL</Select.Option>
+                  <Select.Option value="2">DOLAR</Select.Option>
+                </Select>
               </Form.Item>
             </Col>
-            <Col 
-              className="gutter-row" 
-              xs={24}
-              md={12}
-            >
+            <Col className="gutter-row item-form-comprobante" xs={24} md={24}>
               <Form.Item
-                name="Nota"
-                rules={[
-                  {
-                    required: true,
-                    message: "Ingrese el email.",
-                  },
-                  {
-                    type: 'email',
-                    message: 'No es un email válido.',
-                  },
-                ]}
+                name="tipoDocumento"
               >
-                <Input placeholder="Email" />
+                <Select>
+                  <Select.Option value="1">NOTA</Select.Option>
+                  <Select.Option value="2">BOLETA</Select.Option>
+                  <Select.Option value="2">FACTURA</Select.Option>
+                </Select>
               </Form.Item>
             </Col>
-            <Col 
-              className="gutter-row" 
-              xs={24}
-              md={12}
-            >
+            <Col className="gutter-row item-form-comprobante" xs={24} md={12}>
               <Form.Item
                 name="estado"
-                rules={[
-                  {
-                    required: true,
-                    message: "Ingrese el teléfono.",
-                  },
-                ]}
               >
-                <InputNumber className="input-numerico" placeholder="Ejm: 934448755" minLength={9} maxLength={9} />
+                <Input className="form-control-estado" placeholder="Ejm: Pagado" />
               </Form.Item>
             </Col>
-            <Col 
-              className="gutter-row" 
-              xs={24}
-              md={12}
-            >
+            <Col className="gutter-row item-form-comprobante" xs={24} md={12}>
               <Form.Item
                 name="montoPagado"
                 rules={[
@@ -124,23 +91,20 @@ function InformacionComprobante()
                   },
                 ]}
               >
-                <Input placeholder="Ejm: Elenco Santísima" />
-              </Form.Item>
-            </Col>
-            <Col 
-              className="gutter-row" 
-              xs={24}
-              md={12}
-            >
-              <Form.Item
-                name="tipoPago"
-              >
                 <InputNumber
                   prefix="S/ "
                   className="input-numerico"
                   stringMode
                   step="0.01"
                 />
+              </Form.Item>
+            </Col>
+            <Col className="gutter-row" xs={24} md={12}>
+              <Form.Item name="tipoPago">
+                <Radio.Group className="radio-tipoPago">
+                  <Radio value="1">Efectivo</Radio>
+                  <Radio value="2">Tarjeta</Radio>
+                </Radio.Group>
               </Form.Item>
             </Col>
           </Row>

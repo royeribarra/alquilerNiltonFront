@@ -7,3 +7,34 @@
     width: 100%;
     border-radius: 6px;
 }
+
+.form-info-cliente .ant-card-head-wrapper{
+    min-height: auto;
+}
+
+.form-info-cliente .ant-card-head{
+    font-size: 14px;
+    background-color: cornsilk;
+}
+
+.form-info-cliente .ant-card-head-title{
+    padding-top: 8px;
+    padding-bottom: 8px;
+}
+
+.form-info-cliente .ant-card-extra{
+    padding-top: 8px;
+    padding-bottom: 8px;
+}
+
+.dni-info-cliente{
+    height: 30px;
+}
+
+.buscar-cliente .ant-select-selector{
+    border-radius: 6px !important;
+}
+
+.cantidad-visitas{
+    border: none;
+}

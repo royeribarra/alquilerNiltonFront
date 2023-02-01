@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import {
-  InputNumber,
+  Rate,
   Form,
   Col,
   Input,
@@ -8,7 +8,8 @@ import {
   DatePicker,
   Card,
   Row,
-  Button
+  Button,
+  InputNumber
 } from "antd";
 import { NavLink } from "react-router-dom";
 import "./informacionCliente.css";
@@ -35,7 +36,7 @@ const SearchInput = ({determinarProceso, placeholder, style}) => {
   const options = data.map((d) => <Option key={d.id} value={d.id} precio={d.precio_unitario}>{d.nombre}</Option>);
   return (
     <Select
-      className="selectLanding-ant"
+      className="buscar-cliente"
       showSearch
       value={value}
       placeholder={placeholder}
@@ -58,7 +59,7 @@ function InformacionCliente()
   const [formProducto] = Form.useForm();
   const [existeProducto, setExisteProducto] = useState(true);
 
-  const obtenerProducto = (e, data) => {
+  const obtenerCliente = (e, data) => {
     setIdProducto(data.key);
     if(data.children !== "Otro producto"){
       formProducto.setFieldsValue({
@@ -77,37 +78,31 @@ function InformacionCliente()
 
   
   return(
-    <Form
-      layout="vertical"
-      className="row-col"
-      onFinish={onFinish}
-      initialValues={{
-        clienteGrupoId: "1",
-        profesionId: "1",
-        credito: "1.00",
-        tipoDocumento: "1"
-      }}
-    >
-      <Card 
-        title="Información cliente"
-        extra={
-          <>
-            <NavLink to="/crear-cliente">
-              <Button>Crear cliente</Button>
-            </NavLink>
-          </>
-        }
+    <div>
+      <Form
+        className="form-info-cliente"
+        layout="vertical"
+        onFinish={onFinish}
+        initialValues={{
+          clienteGrupoId: "1",
+          profesionId: "1",
+          credito: "1.00",
+          estrellas: 4,
+          cantidadVisitas: 1
+        }}
       >
-        <div className="body-card-generales">
-          <Row 
-            gutter={{
-              xs: 8,
-              sm: 16,
-              md: 24,
-              lg: 32,
-            }}
-          >
-            <Col className="gutter-row" xs={24} md={12} >
+        <Card
+          title="Información cliente"
+          extra={
+            <>
+              <NavLink to="/crear-cliente">
+                <Button>Crear cliente</Button>
+              </NavLink>
+            </>
+          }
+        >
+          <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
+            <Col className="gutter-row" xs={24} md={12}>
               <Form.Item
                 name="dni"
                 rules={[
@@ -117,7 +112,7 @@ function InformacionCliente()
                   },
                 ]}
               >
-                <Input placeholder="dni: 33233333" maxLength={8} minLength={8} />
+                <Input className="dni-info-cliente" placeholder="dni: 33233333" maxLength={8} minLength={8} />
               </Form.Item>
             </Col>
             <Col className="gutter-row" xs={24} md={12} >
@@ -131,29 +126,27 @@ function InformacionCliente()
                 ]}
               >
                 <SearchInput
-                  placeholder="Escribe el nombre del cliente"
-                  determinarProceso={obtenerProducto}
+                  placeholder="Buscar cliente..."
+                  determinarProceso={obtenerCliente}
                 />
               </Form.Item>
             </Col>
             <Col className="gutter-row" xs={24} md={12} >
-              <div>
-                <p>Número de visita</p>
-                <p>0</p>
-              </div>
+              <Form.Item name="cantidadVisitas" label="Número de visitas">
+                <InputNumber className="cantidad-visitas" />
+              </Form.Item>
             </Col>
             <Col className="gutter-row" xs={24} md={12} >
-              <div>
-                <p>Estrellas</p>
-                <p>Cliente normal</p>
-              </div>
+              <Form.Item name="estrellas" label="Cliente normal">
+                <Rate />
+              </Form.Item>
             </Col>
             <Col className="gutter-row" xs={24} md={12} >
               <Form.Item
                 label="Fecha entrega"
                 name="fechaEntrega"
               >
-                <DatePicker className="cliente-fecha-entrega" />
+                <DatePicker className="cliente-fecha-entrega" placeholder="Fecha de entrega" />
               </Form.Item>
             </Col>
             <Col className="gutter-row" xs={24} md={12} >
@@ -161,13 +154,14 @@ function InformacionCliente()
                 label="Fecha devolución"
                 name="fechaDevolucion"
               >
-                <DatePicker className="cliente-fecha-devolucion" />
+                <DatePicker className="cliente-fecha-devolucion" placeholder="Fecha devolución" />
               </Form.Item>
             </Col>
           </Row>
-        </div>
-      </Card>
-    </Form>
+        </Card>
+      </Form>
+    </div>
+    
   );
 }
 

@@ -100,7 +100,7 @@ function ListaProductos()
 
   
   return(
-    <Card title="Lista productos">
+    <Card title="Lista productos" className="card-lista-productos">
       <SearchInput
         placeholder="Buscar producto..."
         determinarProceso={obtenerProducto}
