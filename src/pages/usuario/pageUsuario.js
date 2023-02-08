@@ -10,6 +10,7 @@ import {
 import { UsuarioService } from "../../servicios/usuarioService";
 import TabUsuarios from "./usuarios/tabUsuarios";
 import TabAutorizacion from "./autorizacion/tabAutorizacion";
+import TabAsignacionRolUsuario from "./asignacionRolUsuario/tabAsignacionRolUsuario";
 
 const {TabPane} = Tabs;
 
@@ -22,7 +23,7 @@ const tabItems = [
   {
     key: '2',
     label: `Roles y asignación de usuarios`,
-    children: 'hola',
+    children: <TabAsignacionRolUsuario />,
   },
   {
     key: '3',
