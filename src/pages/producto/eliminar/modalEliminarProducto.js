@@ -1,15 +1,13 @@
 import React from "react";
 import { Modal } from "antd";
 
-function EliminarProducto({status, handleClose, handleRefreshTable, activeRow}) {
-  
+function ModalEliminarProducto({status, handleClose, activeRows = []}) {
   const closeModal = () => {
     handleClose(false);
   };
 
   const handleSubmit = () => {
     closeModal();
-    handleRefreshTable();
   };
 
   return (
@@ -21,8 +19,8 @@ function EliminarProducto({status, handleClose, handleRefreshTable, activeRow}) 
       okText="Confirmar"
       cancelText="Cancelar"
     >
-      <p>¿Está seguro de eliminar este Producto: {activeRow.producto_nombre}?</p>
+      <p>¿Está seguro de eliminar este Producto: ?</p>
     </Modal>
   );
 }
-export default EliminarProducto;
+export default ModalEliminarProducto;

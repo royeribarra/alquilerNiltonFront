@@ -1,0 +1,17 @@
+.tab-autorizacion .ant-card-head-title{
+    padding: 4px;
+}
+
+.tab-autorizacion .ant-card-head-wrapper{
+    min-height: 50px;
+}
+
+.autorizacion-guardar-cambios{
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-left: 10px;
+}
+
+.autorizacion-guardar-cambios button{
+    background-color: #1890ff;
+}

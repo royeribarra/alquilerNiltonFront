@@ -7,40 +7,8 @@ import {
   Avatar,
   Typography,
 } from "antd";
-import Buscar from "./filtro/buscar";
-import FiltroCliente from "./filtro/filtroCliente";
 
 const { Title } = Typography;
-
-const columns = [
-  {
-    title: "Nombres",
-    dataIndex: "nombres",
-    key: "nombres",
-    width: "32%",
-  },
-  {
-    title: "Doc. identidad",
-    dataIndex: "documento",
-    key: "documento",
-  },
-
-  {
-    title: "Teléfono",
-    key: "telefono",
-    dataIndex: "telefono",
-  },
-  {
-    title: "Unido el",
-    key: "created_at",
-    dataIndex: "created_at",
-  },
-  {
-    title: "Estado",
-    key: "estado",
-    dataIndex: "estado",
-  },
-];
 
 const data1 = [
   {
@@ -102,7 +70,37 @@ const data1 = [
 
 ];
 
-function Clientes()
+const columns = [
+  {
+    title: "nroDoc",
+    dataIndex: "nombres",
+    key: "nombres",
+    width: "32%",
+  },
+  {
+    title: "Código",
+    dataIndex: "documento",
+    key: "documento",
+  },
+
+  {
+    title: "Nombres",
+    key: "telefono",
+    dataIndex: "telefono",
+  },
+  {
+    title: "Apellidos",
+    key: "created_at",
+    dataIndex: "created_at",
+  },
+  {
+    title: "Estado",
+    key: "estado",
+    dataIndex: "estado",
+  },
+];
+
+function ListaRoles()
 {
   const[data, setData] = useState([]);
   const [selectedRowsArray, setSelectedRowKeys] = useState([]);
@@ -139,20 +137,24 @@ function Clientes()
 
   return(
     <div>
-      <FiltroCliente fetchAll={fetchAll} />
-      <Buscar />
       <Card
         bordered={false}
-        className="criclebox tablespace mb-24"
+        className="criclebox tablespace mb-24 card-lista-roles"
+        style={{
+          margin: "10px"
+        }}
       >
         <div className="table-responsive">
           <Table
             rowSelection={rowSelection}
             columns={columns}
-            dataSource={data}
+            dataSource={data1}
             pagination={pagination}
             className="ant-border-space"
             onChange={fetchAll}
+            scroll={{
+              y: 200,
+            }}
           />
         </div>
       </Card>
@@ -160,4 +162,4 @@ function Clientes()
   );
 }
 
-export default Clientes;
+export default ListaRoles;

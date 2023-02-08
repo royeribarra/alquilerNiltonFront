@@ -9,7 +9,7 @@ import {
   Form,
 } from "antd";
 import Buscar from "./buscar";
-import EliminarProducto from "./eliminarProducto";
+import ModalEliminarProducto from "./eliminar/modalEliminarProducto";
 import { ProductoService } from "../../servicios/productoService";
 
 const columns = [
@@ -37,98 +37,13 @@ const columns = [
   },
 ];
 
-const data1 = [
-  {
-    key: "1",
-    name: (
-      <>
-        <Avatar.Group>
-          <Avatar
-            className="shape-avatar"
-            shape="square"
-            size={40}
-            src=""
-          ></Avatar>
-          <div className="avatar-info">
-            <p>michael@mail.com</p>
-          </div>
-        </Avatar.Group>{" "}
-      </>
-    ),
-    function: (
-      <>
-        <div className="author-info">
-          <p>Organization</p>
-        </div>
-      </>
-    ),
-
-    status: (
-      <>
-        <Button type="primary" className="tag-primary">
-          ONLINE
-        </Button>
-      </>
-    ),
-    employed: (
-      <>
-        <div className="ant-employed">
-          <span>23/04/18</span>
-          <a href="#pablo">Edit</a>
-        </div>
-      </>
-    ),
-  },
-
-  {
-    key: "2",
-    name: (
-      <>
-        <Avatar.Group>
-          <Avatar
-            className="shape-avatar"
-            shape="square"
-            size={40}
-            src=""
-          ></Avatar>
-          <div className="avatar-info">
-            <p>alexa@mail.com</p>
-          </div>
-        </Avatar.Group>{" "}
-      </>
-    ),
-    function: (
-      <>
-        <div className="author-info">
-          <p>Developer</p>
-        </div>
-      </>
-    ),
-
-    status: (
-      <>
-        <Button className="tag-badge">ONLINE</Button>
-      </>
-    ),
-    employed: (
-      <>
-        <div className="ant-employed">
-          <span>23/12/20</span>
-          <a href="#pablo">Edit</a>
-        </div>
-      </>
-    ),
-  }
-];
-
-
 function Productos()
 {
   const productoService = new ProductoService("wiqli/productos");
   const [rows, setRows] = useState([]);
   const [activeRow, setActiveRow] = useState({});
   const [showDelModal, setShowDelModal] = useState(false);
-  const[data, setData] = useState([]);
+  const [data, setData] = useState([]);
   const [form] = Form.useForm();
   const [pagination, setPagination] = useState({
     current: 1,
@@ -165,7 +80,7 @@ function Productos()
         title="Tabla de productos"
         extra={
           <>
-            <NavLink to="/crear-cliente">
+            <NavLink to="/crear-producto">
               <Button>Crear producto</Button>
             </NavLink>
           </>
@@ -174,11 +89,11 @@ function Productos()
         <div className="table-responsive">
           <Table
             columns={columns}
-            dataSource={data1}
+            dataSource={data}
             pagination={false}
             className="ant-border-space"
           />
-          <EliminarProducto
+          <ModalEliminarProducto
             status={showDelModal}
             handleClose={setShowDelModal}
             handleRefreshTable={fetchAll}

@@ -1,0 +1,15 @@
+.login-contrasena input{
+    height: 30px;
+}
+
+.login-contrasena span{
+    border-radius: 6px;
+}
+
+.login-confirmar input{
+    height: 30px;
+}
+
+.login-confirmar span{
+    border-radius: 6px;
+}

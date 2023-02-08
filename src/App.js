@@ -1,62 +1,57 @@
-/*!
-=========================================================
-* Muse Ant Design Dashboard - v1.0.0
-=========================================================
-* Product Page: https://www.creative-tim.com/product/muse-ant-design-dashboard
-* Copyright 2021 Creative Tim (https://www.creative-tim.com)
-* Licensed under MIT (https://github.com/creativetimofficial/muse-ant-design-dashboard/blob/main/LICENSE.md)
-* Coded by Creative Tim
-=========================================================
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-*/
-import { Switch, Route, Redirect } from "react-router-dom";
-import Home from "./pages/Home";
-import Tables from "./pages/Tables";
-import Billing from "./pages/Billing";
-import Rtl from "./pages/Rtl";
-import Profile from "./pages/Profile";
-import SignUp from "./pages/SignUp";
-import SignIn from "./pages/SignIn";
+import { useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { Spin } from 'antd';
+import ReduxToastr from "react-redux-toastr";
+import "react-redux-toastr/lib/css/react-redux-toastr.min.css";
 import Main from "./components/layout/Main";
-import "antd/dist/antd.css";
-import "./assets/styles/main.css";
-import "./assets/styles/responsive.css";
-import Clientes from "./pages/cliente/clientes";
-import ClienteForm from "./pages/cliente/clienteForm/clienteForm";
-import Productos from "./pages/producto/productos";
-import ProductoForm from "./pages/producto/productoForm";
-import Ventas from "./pages/venta/ventas";
-import CrearVenta from "./pages/venta/crearVenta";
+import Login from "./pages/Login";
+import StorageService from "./servicios/storageService";
+import {Buffer} from 'buffer';
+import { login } from "./redux/actions/userActions";
+import { Navigate, Route, Routes } from "react-router-dom";
 
 function App() {
+  const state = useSelector((state) => state);
+  const dispatch = useDispatch();
+  const { show } = state.loader;
+  const { isLoged } = state.user;
+  const storageService = new StorageService();
+
+  useEffect(()=>{
+    const token = localStorage.getItem("tknData");
+    if(token){
+      const tknData = JSON.parse(Buffer.from(storageService.getItemObject("tknData"), 'base64'));
+      if(tknData.status){
+        dispatch(login());
+      }
+    }
+  }, []);
+
   return (
     <div className="App">
-      <Switch>
-        <Route path="/sign-up" exact component={SignUp} />
-        <Route path="/sign-in" exact component={SignIn} />
-        <Main>
-          <Route exact path="/dashboard" component={Home} />
-          <Route exact path="/tables" component={Tables} />
-          <Route exact path="/billing" component={Billing} />
-          <Route exact path="/rtl" component={Rtl} />
-          <Route exact path="/profile" component={Profile} />
-
-          <Route exact path="/clientes" component={Clientes} />
-          <Route exact path="/cliente/:clienteId" component={ClienteForm} />
-          <Route exact path="/crear-cliente" component={ClienteForm} />
-
-          <Route exact path="/ventas" component={Ventas} />
-          <Route exact path="/crear-venta" component={CrearVenta} />
-
-          <Route exact path="/productos" component={Productos} />
-          <Route exact path="/producto/:productoId" component={ProductoForm} />
-          <Route exact path="/crear-producto" component={ProductoForm} />
-
-          {/* <Redirect from="*" to="/dashboard" /> */}
-          {/* <Redirect from="**" to={`/dashboard`} />
-          <Redirect from="" to={`/dashboard`} /> */}
-        </Main>
-      </Switch>
+      <Spin tip="Espere por favor..." spinning={show}>
+        {
+          isLoged ? (<Main />) 
+          : (<Routes>
+              <Route exact path="/login" element= {<Login/>} />
+              {/* <Route
+                exact
+                path="*"
+                element={<Navigate to="/login" replace />}
+              /> */}
+            </Routes>)
+        }
+      </Spin>
+      <ReduxToastr
+        className="toastr__modificar"
+        timeOut={4000}
+        newestOnTop={false}
+        preventDuplicates
+        position="top-right"
+        getState={(state) => state.toastr}
+        progressBar
+        closeOnToastrClick
+      />
     </div>
   );
 }

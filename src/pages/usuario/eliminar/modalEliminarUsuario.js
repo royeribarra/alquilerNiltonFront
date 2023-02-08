@@ -1,7 +1,7 @@
 import React from "react";
 import { Modal } from "antd";
 
-function ModalEliminarCliente({status, handleClose, activeRows = []}) {
+function ModalEliminarUsuario({status, handleClose, activeRows = []}) {
   const closeModal = () => {
     handleClose(false);
   };
@@ -13,7 +13,7 @@ function ModalEliminarCliente({status, handleClose, activeRows = []}) {
   return (
     <Modal 
       title="Eliminar producto" 
-      open={status} 
+      visible={status} 
       onOk={handleSubmit} 
       onCancel={closeModal}
       okText="Confirmar"
@@ -23,4 +23,4 @@ function ModalEliminarCliente({status, handleClose, activeRows = []}) {
     </Modal>
   );
 }
-export default ModalEliminarCliente;
+export default ModalEliminarUsuario;

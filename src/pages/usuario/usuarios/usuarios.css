@@ -1,0 +1,32 @@
+/* CONTENEDOR ACCIONES USUARIOS */
+.contenedor-acciones-usuario .ant-card{
+    box-shadow: none;
+    background: none;
+}
+
+/* CARD ACCIONES USUARIOS */
+.card-acciones-usuario{
+    margin-bottom: 0px;
+    background: none;
+}
+
+/* ACCIONES USUARIOS */
+.btn-nuevo{
+    background-color: blue;
+}
+
+.btn-editar{
+    background-color: darkgrey;
+}
+
+.btn-darBaja{
+    background-color: red;
+}
+
+.btn-activar{
+    background-color: green;
+}
+
+.btn-actualizar{
+    background-color: darkgoldenrod;
+}

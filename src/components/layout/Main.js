@@ -16,10 +16,11 @@ import { Layout, Drawer, Affix } from "antd";
 import Sidenav from "./Sidenav";
 import Header from "./Header";
 import Footer from "./Footer";
+import MainRoutes from "../../routes/mainRoutes";
 
 const { Header: AntHeader, Content, Sider } = Layout;
 
-function Main({ children }) {
+function Main() {
   const [visible, setVisible] = useState(false);
   const [placement, setPlacement] = useState("right");
   const [sidenavColor, setSidenavColor] = useState("#1890ff");
@@ -34,13 +35,13 @@ function Main({ children }) {
   let { pathname } = useLocation();
   pathname = pathname.replace("/", "");
 
-  useEffect(() => {
-    if (pathname === "rtl") {
-      setPlacement("left");
-    } else {
-      setPlacement("right");
-    }
-  }, [pathname]);
+  // useEffect(() => {
+  //   if (pathname === "rtl") {
+  //     setPlacement("left");
+  //   } else {
+  //     setPlacement("right");
+  //   }
+  // }, [pathname]);
 
   return (
     <Layout
@@ -53,7 +54,7 @@ function Main({ children }) {
         placement={placement === "right" ? "left" : "right"}
         closable={false}
         onClose={() => setVisible(false)}
-        visible={visible}
+        open={visible}
         key={placement === "right" ? "left" : "right"}
         width={250}
         className={`drawer-sidebar ${
@@ -102,9 +103,6 @@ function Main({ children }) {
                 onPress={openDrawer}
                 name={pathname}
                 subName={pathname}
-                handleSidenavColor={handleSidenavColor}
-                handleSidenavType={handleSidenavType}
-                handleFixedNavbar={handleFixedNavbar}
               />
             </AntHeader>
           </Affix>
@@ -114,13 +112,12 @@ function Main({ children }) {
               onPress={openDrawer}
               name={pathname}
               subName={pathname}
-              handleSidenavColor={handleSidenavColor}
-              handleSidenavType={handleSidenavType}
-              handleFixedNavbar={handleFixedNavbar}
             />
           </AntHeader>
         )}
-        <Content className="content-ant">{children}</Content>
+        <Content className="content-ant">
+          <MainRoutes />
+        </Content>
         <Footer />
       </Layout>
     </Layout>

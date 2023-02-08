@@ -93,7 +93,7 @@ export class LocalStorage {
   
     getItemObject(key) {
       const itemStorage = this.getItem(key);
-      return itemStorage ? JSON.parse(atob(itemStorage)) : null;
+      return itemStorage ? itemStorage : null;
     }
    
     removeItem(key) {
