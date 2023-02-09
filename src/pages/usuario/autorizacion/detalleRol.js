@@ -9,7 +9,7 @@ import "./autorizacion.css";
 
 const treeData = [
   {
-    title: 'parent 1',
+    title: 'Dashboard',
     key: '0-0',
     children: [
       {
@@ -46,7 +46,41 @@ const treeData = [
           },
         ],
       },
+    ]
+  },
+  {
+    title: 'Producto',
+    key: '0-1',
+    children: [
+      {
+        title: '0-1-0-0',
+        key: '0-1-0-0',
+      },
+      {
+        title: '0-1-0-1',
+        key: '0-1-0-1',
+      },
+      {
+        title: '0-1-0-2',
+        key: '0-1-0-2',
+      },
     ],
+  },
+  {
+    title: 'Comercial',
+    key: '0-2',
+  },
+  {
+    title: 'Caja',
+    key: '0-3',
+  },
+  {
+    title: 'Usuarios',
+    key: '0-4',
+  },
+  {
+    title: 'Estadísticas',
+    key: '0-5',
   },
 ];
 

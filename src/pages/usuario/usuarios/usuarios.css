@@ -13,18 +13,22 @@
 /* ACCIONES USUARIOS */
 .btn-nuevo{
     background-color: blue;
+    margin-right: 5px;
 }
 
 .btn-editar{
     background-color: darkgrey;
+    margin-right: 5px;
 }
 
 .btn-darBaja{
     background-color: red;
+    margin-right: 5px;
 }
 
 .btn-activar{
     background-color: green;
+    margin-right: 5px;
 }
 
 .btn-actualizar{

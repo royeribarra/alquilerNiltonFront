@@ -16,6 +16,7 @@ import ProductoForm from "../pages/producto/productoForm/productoForm";
 import Ventas from "../pages/venta/ventas";
 import CrearVenta from "../pages/venta/crearVenta";
 import PageUsuario from "../pages/usuario/pageUsuario";
+import PageCaja from "../pages/caja/pageCaja";
 
 function MainRoutes()
 {
@@ -43,6 +44,8 @@ function MainRoutes()
       <Route exact path="/productos" element={<Productos/> } />
       <Route exact path="/producto/:productoId" element={<ProductoForm/> } />
       <Route exact path="/crear-producto" element={<ProductoForm/> } />
+
+      <Route exact path="/caja" element={<PageCaja/> } />
 
       {/* <Route
         exact

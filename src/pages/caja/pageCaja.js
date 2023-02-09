@@ -2,31 +2,25 @@ import React from "react";
 import {
   Tabs,
 } from "antd";
-import TabUsuarios from "./usuarios/tabUsuarios";
-import TabAutorizacion from "./autorizacion/tabAutorizacion";
-import TabAsignacionRolUsuario from "./asignacionRolUsuario/tabAsignacionRolUsuario";
+import TabCajaActual from "./cajaActual/tabCajaActual";
+import TabCajasAnteriores from "./cajasAnteriores/tabCajasAnteriores";
 
 const {TabPane} = Tabs;
 
 const tabItems = [
   {
     key: '1',
-    label: `Usuarios`,
-    children: <TabUsuarios />,
+    label: `Caja Actual`,
+    children: <TabCajaActual />,
   },
   {
     key: '2',
-    label: `Roles y asignación de usuarios`,
-    children: <TabAsignacionRolUsuario />,
-  },
-  {
-    key: '3',
-    label: `Autorización`,
-    children: <TabAutorizacion />,
+    label: `Cajas Anteriores`,
+    children: <TabCajasAnteriores />,
   },
 ];
 
-function PageUsuario()
+function PageCaja()
 {
   const onChange = (e) => {
     console.log(e);
@@ -45,4 +39,4 @@ function PageUsuario()
   );
 }
 
-export default PageUsuario;
+export default PageCaja;

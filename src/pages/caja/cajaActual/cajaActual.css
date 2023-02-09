@@ -1,0 +1,34 @@
+
+
+
+
+.btn-abrirCaja{
+    margin-right: 5px;
+}
+
+.btn-cerrarCaja{
+    margin-right: 5px;
+}
+
+.btn-nuevaVenta{
+    background-color: green;
+    color: white;
+    margin-right: 5px;
+}
+
+.btn-nuevoAlquiler{
+    background-color: blueviolet;
+    color: white;
+    margin-right: 5px;
+}
+
+.btn-pedidosPendientes{
+    background-color: blue;
+    color: white;
+    margin-right: 5px;
+}
+
+.btn-confirmarDevoluciones{
+    background-color: brown;
+    color: white;
+}

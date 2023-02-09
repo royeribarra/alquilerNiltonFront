@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 import {
   Card,
@@ -6,11 +6,25 @@ import {
   Button
 } from "antd";
 import "./asignacionRolUsuario.css";
+import PerfilForm from "./perfilForm";
 
 const {TabPane} = Tabs;
 
 function AccionesAsignacion({ fetchAll })
 {
+  const [showModalFormPerfil, setShowModalFormPerfil] = useState(false);
+  const [usuarioId, setUsuarioId] = useState(1);
+
+  const crearPerfil = () => {
+    setUsuarioId(1);
+    setShowModalFormPerfil(true);
+  };
+  
+  const editarPerfil = (id) => {
+    setUsuarioId(2);
+    setShowModalFormPerfil(true);
+  };
+
   const filtrarPor = (tipo) => {
     fetchAll( null, tipo);
   };
@@ -25,13 +39,17 @@ function AccionesAsignacion({ fetchAll })
         }}
       >
         <div>
-          <Button className="btn-nuevo" onClick={()=>filtrarPor()}>Nuevo</Button>
-          <Button className="btn-editar" onClick={()=>filtrarPor(2)}>Editar</Button>
+          <Button className="btn-nuevo" onClick={crearPerfil}>Nuevo</Button>
+          <Button className="btn-editar" onClick={editarPerfil}>Editar</Button>
           <Button className="btn-darBaja" onClick={()=>filtrarPor(3)}>Dar baja</Button>
-          <Button className="btn-activar" onClick={()=>filtrarPor(4)}>Activar</Button>
           <Button className="btn-actualizar" onClick={()=>filtrarPor(5)}>Actualizar</Button>
         </div>
       </Card>
+      <PerfilForm
+        status={showModalFormPerfil}
+        handleClose={setShowModalFormPerfil}
+        usuarioId={usuarioId}
+      />
     </div>
     
   );

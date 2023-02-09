@@ -5,12 +5,9 @@ import {
   Tabs,
   Button
 } from "antd";
-import "./usuarios.css";
-import UsuarioForm from "./usuarioForm";
-import ModalDarBaja from "./modalDarBaja";
-const {TabPane} = Tabs;
+import "./cajasAnteriores.css";
 
-function AccionesUsuario({ fetchAll })
+function AccionesCajasAnteriores({ fetchAll })
 {
   const [showModalFormUsuario, setShowModalFormUsuario] = useState(false);
   const [showModalBajaUsuario, setShowModalBajaUsuario] = useState(false);
@@ -52,18 +49,8 @@ function AccionesUsuario({ fetchAll })
           <Button className="btn-actualizar" onClick={()=>filtrarPor(5)}>Actualizar</Button>
         </div>
       </Card>
-      <UsuarioForm 
-        status={showModalFormUsuario}
-        handleClose={setShowModalFormUsuario}
-        usuarioId={usuarioId}
-      />
-      <ModalDarBaja 
-        status={showModalBajaUsuario}
-        handleClose={setShowModalBajaUsuario}
-        usuarioId={usuarioId}
-      />
     </div>
   );
 }
 
-export default AccionesUsuario;
+export default AccionesCajasAnteriores;
