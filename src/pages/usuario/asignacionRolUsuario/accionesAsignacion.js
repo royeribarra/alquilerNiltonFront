@@ -6,7 +6,7 @@ import {
   Button
 } from "antd";
 import "./asignacionRolUsuario.css";
-import PerfilForm from "./perfilForm";
+import PerfilForm from "./rolForm";
 
 const {TabPane} = Tabs;
 

@@ -17,10 +17,14 @@ import Sidenav from "./Sidenav";
 import Header from "./Header";
 import Footer from "./Footer";
 import MainRoutes from "../../routes/mainRoutes";
+import Loader from "../loaderComponent/loaderComponent";
+import { useDispatch, useSelector } from "react-redux";
 
 const { Header: AntHeader, Content, Sider } = Layout;
 
 function Main() {
+  const state = useSelector((state) => state);
+  const { show } = state.loader;
   const [visible, setVisible] = useState(false);
   const [placement, setPlacement] = useState("right");
   const [sidenavColor, setSidenavColor] = useState("#1890ff");
@@ -49,6 +53,9 @@ function Main() {
         pathname === "profile" ? "layout-profile" : ""
       } ${pathname === "rtl" ? "layout-dashboard-rtl" : ""}`}
     >
+      <div className={ show ? "" : "loaderInvisible"}>
+        <Loader></Loader>
+      </div>
       <Drawer
         title={false}
         placement={placement === "right" ? "left" : "right"}

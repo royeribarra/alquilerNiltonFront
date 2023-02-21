@@ -287,6 +287,19 @@ function Sidenav({ color }) {
             <span className="label">Profile</span>
           </NavLink>
         </Menu.Item>
+        <Menu.Item key="9">
+          <Button>
+            <span
+              className="icon"
+              style={{
+                background: page === "profile" ? color : "",
+              }}
+            >
+              {profile}
+            </span>
+            <span className="label">Cerrar sesión</span>
+          </Button>
+        </Menu.Item>
         {/* <Menu.Item key="10">
           <NavLink to="/sign-in">
             <span className="icon">{signin}</span>

@@ -3,11 +3,7 @@ export const LOGIN = "LOGIN";
 export const LOGOUT = "LOGOUT";
 
 //CONTADOR
-export const INCREMENT = "INCREMENT";
-export const DECREMENT = "DECREMENT";
-export const INCREMENT_5 = "INCREMENT_5";
-export const DECREMENT_5 = "DECREMENT_5";
-export const RESET = "RESET";
+export const SELECT_ROL = "SELECT_ROL";
 
 //SHOPPING CART
 export const ADD_TO_CART = "ADD_TO_CART";

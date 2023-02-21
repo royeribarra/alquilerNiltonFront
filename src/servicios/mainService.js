@@ -1,6 +1,7 @@
 import axios from "axios";
 import LogService from "./logService";
 import StorageService from "./storageService";
+import {Buffer} from 'buffer';
 
 export class MainService {
     headers = {};
@@ -8,12 +9,13 @@ export class MainService {
     constructor(url){
         
         this.url = this.sanitizeUrl(url);
+        this.clearUrl = this.getClearUrl();
         this.options = this.getAuthInfo();
     }
 
     getAuthInfo() {
         const storageService = new StorageService();
-        const {access_token} = storageService.getItemObject('tknData');
+        const {access_token} = JSON.parse(Buffer.from(storageService.getItemObject("tknData"), 'base64'));
         this.accessToken = access_token;
         const options = this.addOptions(access_token);
         return options;
@@ -46,6 +48,11 @@ export class MainService {
         return urlSanitized;
     }
 
+    getClearUrl(){
+        const clearUrl = `${process.env.REACT_APP_BASE_PATH}/api`;
+        return clearUrl;
+    }
+
     async getAll(params = {page: 1 }) {
         const options = {...this.options, params};
         try {
@@ -53,9 +60,9 @@ export class MainService {
             return await res;
 
         } catch (error) {
-            const logService = new LogService();
-            logService.logout(this.accessToken);
-            return;
+            // const logService = new LogService();
+            // logService.logout(this.accessToken);
+            // return;
         }
         
     }

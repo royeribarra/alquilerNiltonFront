@@ -1,7 +1,7 @@
 import { LOGIN, LOGOUT } from "../types";
 
 export const userInitialState = {
-    isLoged: true,
+    isLoged: false,
     info: {},
 };
 

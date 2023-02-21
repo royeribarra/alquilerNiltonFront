@@ -52,11 +52,11 @@ function MainRoutes()
         path="*"
         element={<Navigate to="/" replace />}
       /> */}
-      <Route
+      {/* <Route
         exact
-        path="home"
-        element={<Navigate to="/" replace />}
-      />
+        path="*"
+        element={<Navigate to="/dashboard" replace />}
+      /> */}
     
     </Routes>
   )

@@ -91,6 +91,7 @@ function InformacionCliente()
           cantidadVisitas: 1
         }}
       >
+        
         <Card
           title="Información cliente"
           extra={

@@ -10,10 +10,17 @@ import {
 } from "antd";
 import "./asignacionRolUsuario.css";
 import TextArea from "antd/lib/input/TextArea";
+import { RolService } from "../../../servicios/rolService";
+import { useDispatch } from "react-redux";
+import { showLoader } from "../../../redux/actions/loaderActions";
+import { toastr } from "react-redux-toastr";
 
-function PerfilForm({status, handleClose, activeRows = [], usuarioId})
+function RolForm({status, handleClose, activeRows = [], usuarioId})
 {
-  console.log(usuarioId)
+  const dispatch = useDispatch();
+  const rolService = new RolService();
+  const [form] = Form.useForm();
+
   const closeModal = () => {
     handleClose(false);
   };
@@ -23,12 +30,23 @@ function PerfilForm({status, handleClose, activeRows = [], usuarioId})
   };
 
   const onFinish = (values) => {
-    console.log(values)
+    dispatch(showLoader());
+    rolService.storeRol(values).then(({data})=>{
+      toastr.success(data.message);
+      dispatch(showLoader(false));
+      closeModal();
+      form.resetFields();
+    }).catch(error => {
+      toastr.error("Hubo un error en el servidor");
+      console.log(error)
+      dispatch(showLoader(false));
+      closeModal();
+    });
   };
   
   return(
     <Modal 
-      title="Crear Perfil" 
+      title="Crear Rol" 
       open={status} 
       onOk={handleSubmit} 
       onCancel={closeModal}
@@ -40,16 +58,17 @@ function PerfilForm({status, handleClose, activeRows = [], usuarioId})
         layout="vertical"
         className="row-col"
         onFinish={onFinish}
+        form={form}
       >
         <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
           <Col className="gutter-row" xs={24} md={24}>
               <Form.Item
-              label="Nombres"
-              name="nombres"
+              label="Nombre"
+              name="nombre"
               rules={[
                   {
                   required: true,
-                  message: "Ingrese los nombres del usuario.",
+                  message: "Ingrese el nombre del rol.",
                   },
               ]}
               >
@@ -58,16 +77,16 @@ function PerfilForm({status, handleClose, activeRows = [], usuarioId})
           </Col>
           <Col className="gutter-row" xs={24} md={24}>
               <Form.Item
-              label="Apellidos"
-              name="apellidos"
+              label="Descripción"
+              name="descripcion"
               rules={[
                   {
                   required: true,
-                  message: "Ingrese los apellidos del usuario.",
+                  message: "Ingrese la descripción del rol.",
                   },
               ]}
               >
-                <TextArea placeholder="Ejm: Este perfil hace referencia..." />
+                <TextArea placeholder="Ejm: Este rol hace referencia..." />
               </Form.Item>
           </Col>
         </Row>
@@ -86,4 +105,4 @@ function PerfilForm({status, handleClose, activeRows = [], usuarioId})
   );
 }
 
-export default PerfilForm;
+export default RolForm;

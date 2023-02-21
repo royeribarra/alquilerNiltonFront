@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 import {
   Card,
@@ -7,6 +7,7 @@ import {
   Avatar,
   Typography,
 } from "antd";
+import { RolService } from "../../../servicios/rolService";
 
 const { Title } = Typography;
 
@@ -72,25 +73,20 @@ const data1 = [
 
 const columns = [
   {
-    title: "nroDoc",
-    dataIndex: "nombres",
-    key: "nombres",
+    title: "Id",
+    dataIndex: "id",
+    key: "id",
   },
   {
-    title: "Código",
-    dataIndex: "documento",
-    key: "documento",
+    title: "Nombre",
+    dataIndex: "nombre",
+    key: "nombre",
   },
 
   {
-    title: "Nombres",
-    key: "telefono",
-    dataIndex: "telefono",
-  },
-  {
-    title: "Apellidos",
-    key: "created_at",
-    dataIndex: "created_at",
+    title: "Descripción",
+    key: "descripcion",
+    dataIndex: "descripcion",
   },
   {
     title: "Estado",
@@ -101,17 +97,9 @@ const columns = [
 
 function ListaRoles()
 {
-  const[data, setData] = useState([]);
-  const [selectedRowsArray, setSelectedRowKeys] = useState([]);
-  const [selectedRows, setSelectedRows] = useState([]);
-
-  const rowSelection = {
-    selectedRowKeys: selectedRowsArray,
-    onChange: (selectedRowKeys, selectedRows) => {
-      setSelectedRowKeys(selectedRowKeys);
-      console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
-    },
-  };
+  const rolService = new RolService('roles');
+  const [data, setData] = useState([]);
+  const [selectedRowsKey, setSelectedRowKeys] = useState([]);
 
   const [pagination, setPagination] = useState({
     current: 1,
@@ -119,20 +107,39 @@ function ListaRoles()
     total: 0,
   });
 
-  const fetchAll = (paginationTab = pagination, tipo = null) => {
-    console.log(paginationTab)
-    console.log(tipo)
-    if(tipo)
-    {
+  const rowSelection = {
+    selectedRowKeys: selectedRowsKey,
+    onChange: (selectedRowKeys, selectedRows) => {
+      const newArr = [selectedRowKeys[selectedRowKeys.length-1]]
+      setSelectedRowKeys(newArr);
 
+      //console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
+    },
+  };
+
+  
+
+  const fetchAll = (paginationTab = pagination) => {
+    setSelectedRowKeys([]);
+    const searchObj = {
+      page: paginationTab? paginationTab.current : 1
     }
 
-    setPagination({
-      ...paginationTab,
-      current: paginationTab ? paginationTab.current : pagination.current,
-      total: paginationTab ? paginationTab.total : pagination.total,
+    rolService.getAll(searchObj).then(({data})=> {
+      setData(data.data);
+      setPagination({
+        ...paginationTab,
+        current: data.current,
+        total: data.total,
+      });
+    }).catch(error=>{
+      console.log(error);
     });
   };
+
+  useEffect(()=> {
+    fetchAll();
+  }, []);
 
   return(
     <div>
@@ -147,7 +154,8 @@ function ListaRoles()
           <Table
             rowSelection={rowSelection}
             columns={columns}
-            dataSource={data1}
+            rowKey={(record) => record.id}
+            dataSource={data}
             pagination={pagination}
             className="ant-border-space"
             onChange={fetchAll}

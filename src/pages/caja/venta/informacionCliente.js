@@ -12,6 +12,7 @@ import {
   InputNumber
 } from "antd";
 import { NavLink } from "react-router-dom";
+import Cliente from "../cliente/cliente";
 
 const { Option } = Select;
 
@@ -57,6 +58,7 @@ function InformacionCliente()
   const [idProducto, setIdProducto] = useState(0);
   const [formProducto] = Form.useForm();
   const [existeProducto, setExisteProducto] = useState(true);
+  const [showModalCliente, setShowModalCliente] = useState(false);
 
   const obtenerCliente = (e, data) => {
     setIdProducto(data.key);
@@ -74,7 +76,9 @@ function InformacionCliente()
 
   };
 
-
+  const crearCliente = () => {
+    setShowModalCliente(true);
+  };
   
   return(
     <div>
@@ -94,9 +98,7 @@ function InformacionCliente()
           title="Información cliente"
           extra={
             <>
-              <NavLink to="/crear-cliente">
-                <Button>Crear cliente</Button>
-              </NavLink>
+              <Button onClick={crearCliente}>Crear cliente</Button>
             </>
           }
         >
@@ -159,6 +161,10 @@ function InformacionCliente()
           </Row>
         </Card>
       </Form>
+      <Cliente 
+        status={showModalCliente}
+        handleClose={setShowModalCliente}
+      /> 
     </div>
     
   );

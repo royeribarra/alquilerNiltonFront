@@ -41,7 +41,6 @@ function DetalleProducto()
   return(
     <Form layout="vertical">
     <Card title="Detalle producto" className="card-detalle-producto">
-      
         <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
           <Col className="gutter-row item-form-detalle" xs={24} md={24}>
             <Form.Item

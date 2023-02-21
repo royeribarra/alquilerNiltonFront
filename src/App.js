@@ -30,18 +30,18 @@ function App() {
   return (
     <div className="App">
       <Spin tip="Espere por favor..." spinning={show}>
-        {
-          isLoged ? (<Main />) 
-          : (<Routes>
-              <Route exact path="/login" element= {<Login/>} />
-              {/* <Route
-                exact
-                path="*"
-                element={<Navigate to="/login" replace />}
-              /> */}
-            </Routes>)
-        }
+        <Routes>
+          <Route exact path="/login" element= {<Login/>} />
+          {/* <Route
+            exact
+            path="*"
+            element={<Navigate to="/login" replace />}
+          /> */}
+        </Routes>
+        <Main />
+        
       </Spin>
+      
       <ReduxToastr
         className="toastr__modificar"
         timeOut={4000}

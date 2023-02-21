@@ -51,22 +51,37 @@ const SearchInput = ({determinarProceso, placeholder}) => {
 
 const columns = [
   {
-    title: "PRODUCTO",
+    title: "CODE",
     dataIndex: "nombres",
     key: "name",
   },
   {
-    title: "CODIGO",
+    title: "Detalle producto",
     dataIndex: "function",
     key: "function",
   },
   {
-    title: "TIPO",
+    title: "Unid. med",
     key: "status",
     dataIndex: "status",
   },
   {
-    title: "AGREGAR",
+    title: "Cant.",
+    key: "status",
+    dataIndex: "status",
+  },
+  {
+    title: "Prec. unit",
+    key: "status",
+    dataIndex: "status",
+  },
+  {
+    title: "Total",
+    key: "status",
+    dataIndex: "status",
+  },
+  {
+    title: "Descuento",
     key: "status",
     dataIndex: "status",
   },
@@ -132,7 +147,7 @@ const data1 = [
 
 ];
 
-function ListaProductos()
+function DetalleVenta()
 {
   const [idProducto, setIdProducto] = useState(0);
   const [data, setData] = useState([]);
@@ -159,14 +174,10 @@ function ListaProductos()
   
   return(
     <Card 
-      title="Lista productos" 
+      title="Detalle venta" 
       className="card-lista-productos"
       style={{ height: "432px"}}
     >
-      <SearchInput
-        placeholder="Buscar producto..."
-        determinarProceso={obtenerProducto}
-      />
       <Table
         columns={columns}
         dataSource={data1}
@@ -174,11 +185,11 @@ function ListaProductos()
         className="ant-border-space"
         scroll={{
           x: 400,
-          y: 250
+          y: 300
         }}
       />
     </Card>
   );
 }
 
-export default ListaProductos;
+export default DetalleVenta;

@@ -292,7 +292,7 @@ function Header({
           </div>
         </Col>
         <Col span={24} md={18} className="header-control">
-          <Badge size="small" count={4}>
+          {/* <Badge size="small" count={4}>
             <Dropdown menu={menu} trigger={["click"]}>
               <a
                 href="#pablo"
@@ -302,7 +302,7 @@ function Header({
                 {bell}
               </a>
             </Dropdown>
-          </Badge>
+          </Badge> */}
           <Button type="link" onClick={showDrawer}>
             {logsetting}
           </Button>
