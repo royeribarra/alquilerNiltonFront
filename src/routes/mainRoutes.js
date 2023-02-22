@@ -6,9 +6,7 @@ import Rtl from "../pages/Rtl";
 import Profile from "../pages/Profile";
 import SignUp from "../pages/SignUp";
 import SignIn from "../pages/Login";
-import "antd/dist/antd.css";
-import "../assets/styles/main.css";
-import "../assets/styles/responsive.css";
+
 import Clientes from "../pages/cliente/clientes";
 import ClienteForm from "../pages/cliente/clienteForm/clienteForm";
 import Productos from "../pages/producto/productos";
@@ -26,7 +24,7 @@ function MainRoutes()
       <Route exact path="/sign-in" element= {<SignIn/>}/>
       
       <Route exact path="/" element= {<Home/>} />
-      <Route exact path="/dashboard" element= {<Home/>} />
+      <Route exact path="dashboard" element= {<Home/>} />
       <Route exact path="/tables" element= {<Tables/>} />
       <Route exact path="/billing" element= {<Billing/>} />
       <Route exact path="/rtl" element= {<Rtl/>} />

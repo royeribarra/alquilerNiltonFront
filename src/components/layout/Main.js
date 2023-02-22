@@ -11,7 +11,7 @@
 */
 
 import { useState, useEffect } from "react";
-import { useLocation } from "react-router-dom";
+import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import { Layout, Drawer, Affix } from "antd";
 import Sidenav from "./Sidenav";
 import Header from "./Header";
@@ -19,10 +19,22 @@ import Footer from "./Footer";
 import MainRoutes from "../../routes/mainRoutes";
 import Loader from "../loaderComponent/loaderComponent";
 import { useDispatch, useSelector } from "react-redux";
+import { GrupoClienteService } from "../../servicios/grupoClienteService";
+import { ProfesionService } from "../../servicios/profesionService";
+import { TipoDocumentoService } from "../../servicios/tipoDocumentoService";
+import { fillProfesiones } from "../../redux/actions/profesionActions";
+import { fillGruposCliente } from "../../redux/actions/grupoClienteActions";
+import { fillTiposDocumento } from "../../redux/actions/tipoDocumentoActions";
 
 const { Header: AntHeader, Content, Sider } = Layout;
 
-function Main() {
+function Main() 
+{
+  let history = useNavigate();
+  const grupoClienteService = new GrupoClienteService();
+  const profesionService = new ProfesionService();
+  const tipoDocumentoService = new TipoDocumentoService();
+  const dispatch = useDispatch();
   const state = useSelector((state) => state);
   const { show } = state.loader;
   const [visible, setVisible] = useState(false);
@@ -46,6 +58,32 @@ function Main() {
   //     setPlacement("right");
   //   }
   // }, [pathname]);
+
+  // useEffect(()=> {
+  //   grupoClienteService.getAllToSelect().then(({data})=> {
+  //     dispatch(fillGruposCliente(data));
+  //   });
+  // }, []);
+
+  // useEffect(()=> {
+  //   profesionService.getAllToSelect().then(({data})=> {
+  //     dispatch(fillProfesiones(data));
+  //   });
+  // }, []);
+
+  // useEffect(()=> {
+  //   tipoDocumentoService.getAllToSelect().then(({data})=> {
+  //     dispatch(fillTiposDocumento(data));
+  //   });
+  // }, []);
+
+  useEffect(() => {
+    if (!localStorage.getItem("tknData")) {
+      history('/login');
+    }else{
+      history('/admin/');
+    }
+  }, []);
 
   return (
     <Layout
@@ -123,7 +161,7 @@ function Main() {
           </AntHeader>
         )}
         <Content className="content-ant">
-          <MainRoutes />
+          <Outlet />
         </Content>
         <Footer />
       </Layout>

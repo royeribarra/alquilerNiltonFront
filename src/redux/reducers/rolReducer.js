@@ -2,7 +2,7 @@ import { SELECT_ROL } from "../types";
 
 export const rolInitialState = {
     rolSelected: null,
-    info: {},
+    roles: [],
 };
 
 export default function rolReducer(state = rolInitialState, action)

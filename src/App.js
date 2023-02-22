@@ -9,15 +9,32 @@ import StorageService from "./servicios/storageService";
 import {Buffer} from 'buffer';
 import { login } from "./redux/actions/userActions";
 import { Navigate, Route, Routes } from "react-router-dom";
+import "antd/dist/antd.css";
+import "./assets/styles/main.css";
+import "./assets/styles/responsive.css";
+import SignUp from "./pages/SignUp";
+import Home from "./pages/Home";
+import Tables from "./pages/Tables";
+import Billing from "./pages/Billing";
+import Profile from "./pages/Profile";
+import PageUsuario from "./pages/usuario/pageUsuario";
+import Ventas from "./pages/venta/ventas";
+import CrearVenta from "./pages/venta/crearVenta";
+import Productos from "./pages/producto/productos";
+import ProductoForm from "./pages/producto/productoForm/productoForm";
+import PageCaja from "./pages/caja/pageCaja";
+import Clientes from "./pages/cliente/clientes";
+import ClienteForm from "./pages/cliente/clienteForm/clienteForm";
 
 function App() {
   const state = useSelector((state) => state);
   const dispatch = useDispatch();
   const { show } = state.loader;
   const { isLoged } = state.user;
-  const storageService = new StorageService();
+  
 
   useEffect(()=>{
+    const storageService = new StorageService();
     const token = localStorage.getItem("tknData");
     if(token){
       const tknData = JSON.parse(Buffer.from(storageService.getItemObject("tknData"), 'base64'));
@@ -31,17 +48,51 @@ function App() {
     <div className="App">
       <Spin tip="Espere por favor..." spinning={show}>
         <Routes>
-          <Route exact path="/login" element= {<Login/>} />
-          {/* <Route
+          {/* <Route exact path="/login" element= {<Login/>} /> */}
+          <Route exact path="/login" element={<Login />} />
+
+          <Route exact path="/admin/" element={<Main />} >
+            <Route exact path="sign-up" element= {<SignUp/>} />
+            
+            <Route exact path="home" element= {<Home/>} />
+            <Route exact path="dashboard" element= {<Home/>} />
+            <Route exact path="tables" element= {<Tables/>} />
+            <Route exact path="billing" element= {<Billing/>} />
+            <Route exact path="profile" element= {<Profile/>} />
+
+            <Route exact path="clientes" element={<Clientes/> } />
+            <Route exact path="cliente/:clienteId" element={<ClienteForm/> } />
+            <Route exact path="crear-cliente" element={<ClienteForm/> } />
+
+            <Route exact path="usuarios" element={<PageUsuario/> } />
+
+            <Route exact path="ventas" element={<Ventas/> } />
+            <Route exact path="crear-venta" element={<CrearVenta/> } />
+
+            <Route exact path="productos" element={<Productos/> } />
+            <Route exact path="producto/:productoId" element={<ProductoForm/> } />
+            <Route exact path="crear-producto" element={<ProductoForm/> } />
+
+            <Route exact path="caja" element={<PageCaja/> } />
+            <Route
+              exact
+              path=""
+              element={<Navigate to="home" replace />}
+            />
+            <Route
+              exact
+              path="*"
+              element={<Navigate to="home" replace />}
+            />
+          </Route>
+          <Route
             exact
-            path="*"
+            path="/"
             element={<Navigate to="/login" replace />}
-          /> */}
+          />
+          
         </Routes>
-        <Main />
-        
       </Spin>
-      
       <ReduxToastr
         className="toastr__modificar"
         timeOut={4000}

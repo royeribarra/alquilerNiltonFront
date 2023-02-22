@@ -169,7 +169,7 @@ function Sidenav({ color }) {
       <hr />
       <Menu theme="light" mode="inline">
         <Menu.Item key="1">
-          <NavLink to="/dashboard">
+          <NavLink to="dashboard">
             <span
               className="icon"
               style={{
@@ -195,7 +195,7 @@ function Sidenav({ color }) {
           </NavLink>
         </Menu.Item> */}
         <Menu.Item key="3">
-          <NavLink to="/clientes">
+          <NavLink to="clientes">
             <span
               className="icon"
               style={{
@@ -208,7 +208,7 @@ function Sidenav({ color }) {
           </NavLink>
         </Menu.Item>
         <Menu.Item key="4">
-          <NavLink to="/productos">
+          <NavLink to="productos">
             <span
               className="icon"
               style={{
@@ -221,7 +221,7 @@ function Sidenav({ color }) {
           </NavLink>
         </Menu.Item>
         <Menu.Item key="5">
-          <NavLink to="/ventas">
+          <NavLink to="ventas">
             <span
               className="icon"
               style={{
@@ -234,13 +234,13 @@ function Sidenav({ color }) {
           </NavLink>
         </Menu.Item>
         <Menu.Item key="12">
-          <NavLink to="/usuarios">
+          <NavLink to="usuarios">
             <span className="icon">{signup}</span>
             <span className="label">Usuarios</span>
           </NavLink>
         </Menu.Item>
         <Menu.Item key="13">
-          <NavLink to="/caja">
+          <NavLink to="caja">
             <span className="icon">{signup}</span>
             <span className="label">Caja</span>
           </NavLink>
@@ -275,7 +275,7 @@ function Sidenav({ color }) {
           Account Pages
         </Menu.Item>
         <Menu.Item key="9">
-          <NavLink to="/profile">
+          <NavLink to="profile">
             <span
               className="icon"
               style={{

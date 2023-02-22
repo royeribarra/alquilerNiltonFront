@@ -1,5 +1,5 @@
-import React, { Component } from "react";
-import { Link } from "react-router-dom";
+import React, { Component, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import {
   Layout,
   Menu,
@@ -112,6 +112,7 @@ const signin = [
 
 const Login = () =>
 {
+  let history = useNavigate();
   const state = useSelector((state) => state);
   const dispatch = useDispatch();
 
@@ -150,40 +151,21 @@ const Login = () =>
   const onFinishFailed = (errorInfo) => {
     console.log("Failed:", errorInfo);
   };
+
+  useEffect(() => {
+    if (!localStorage.getItem("tknData")) {
+      history('/login');
+    }else{
+      history('/admin/');
+    }
+  }, []);
+
   return (
     <Layout className="layout-default layout-signin">
       <Header>
         <div className="header-col header-brand">
           <h5>Muse Dashboard</h5>
         </div>
-        {/* <div className="header-col header-nav">
-          <Menu mode="horizontal" defaultSelectedKeys={["1"]}>
-            <Menu.Item key="1">
-              <Link to="/dashboard">
-                {template}
-                <span> Dashboard</span>
-              </Link>
-            </Menu.Item>
-            <Menu.Item key="2">
-              <Link to="/profile">
-                {profile}
-                <span>Profile</span>
-              </Link>
-            </Menu.Item>
-            <Menu.Item key="3">
-              <Link to="/sign-up">
-                {signup}
-                <span> Sign Up</span>
-              </Link>
-            </Menu.Item>
-            <Menu.Item key="4">
-              <Link to="/sign-in">
-                {signin}
-                <span> LOGIN</span>
-              </Link>
-            </Menu.Item>
-          </Menu>
-        </div> */}
       </Header>
       <Content className="signin">
         <Row gutter={[24, 0]} justify="space-around">
@@ -234,30 +216,6 @@ const Login = () =>
               >
                 <Input.Password />
               </Form.Item>
-              {/* <Form.Item
-                className="login-confirmar"
-                name="confirm"
-                label="Confirm Password"
-                dependencies={['password']}
-                hasFeedback
-                rules={[
-                  {
-                    required: true,
-                    message: 'Please confirm your password!',
-                  },
-                  ({ getFieldValue }) => ({
-                    validator(_, value) {
-                      if (!value || getFieldValue('password') === value) {
-                        return Promise.resolve();
-                      }
-                      return Promise.reject(new Error('Las contrasenas deben coincidir!'));
-                    },
-                  }),
-                ]}
-              >
-                <Input.Password />
-              </Form.Item> */}
-
               <Form.Item>
                 <Button
                   type="primary"
@@ -267,12 +225,6 @@ const Login = () =>
                   LOGIN
                 </Button>
               </Form.Item>
-              {/* <p className="font-semibold text-muted">
-                Don't have an account?{" "}
-                <Link to="/sign-up" className="text-dark font-bold">
-                  Sign Up
-                </Link>
-              </p> */}
             </Form>
           </Col>
           <Col
