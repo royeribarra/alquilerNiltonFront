@@ -117,7 +117,6 @@ const Login = () =>
   const dispatch = useDispatch();
 
   const onFinish = (values) => {
-    console.log("Success:", values);
     dispatch(showLoader());
     const logService = new LogService();
     const storageServicce = new StorageService(); 

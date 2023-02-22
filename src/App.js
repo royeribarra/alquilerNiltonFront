@@ -79,18 +79,22 @@ function App() {
               path=""
               element={<Navigate to="home" replace />}
             />
-            <Route
+            {/* <Route
               exact
               path="*"
               element={<Navigate to="home" replace />}
-            />
+            /> */}
           </Route>
           <Route
             exact
             path="/"
             element={<Navigate to="/login" replace />}
           />
-          
+          <Route
+            exact
+            path="*"
+            element={<Navigate to="/login" replace />}
+          />
         </Routes>
       </Spin>
       <ReduxToastr

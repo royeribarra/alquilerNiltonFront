@@ -10,8 +10,10 @@ import rolReducer from "./reducers/rolReducer";
 import grupoClienteReducer from "./reducers/grupoClienteReducer";
 import profesionReducer from "./reducers/profesionReducer";
 import tipoDocumentoReducer from "./reducers/tipoDocumentoReducer";
+import clienteReducer from "./reducers/clienteReducer";
 
 const reducer = combineReducers({
+    cliente: clienteReducer,
     grupoCliente: grupoClienteReducer,
     profesion: profesionReducer,  
     loader: loaderReducer,

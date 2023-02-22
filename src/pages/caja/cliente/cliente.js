@@ -5,11 +5,15 @@ import {
 } from "antd";
 import DatosGenerales from "./datosGenerales";
 import ListaLibretaDirecciones from "./listaLibretaDirecciones";
+import { useSelector } from "react-redux";
 
 const {TabPane} = Tabs;
 
 function Cliente({status, handleClose})
 {
+  const state = useSelector((state) => state);
+  const { clienteSelected } = state.cliente;
+  
   const closeModal = () => {
     handleClose(false);
   };
@@ -30,8 +34,8 @@ function Cliente({status, handleClose})
     },
     {
       key: '2',
-      label: `Libreta de direcciones`,
-      children: <ListaLibretaDirecciones />,
+      label: clienteSelected ? `Libreta de direcciones` : '',
+      children: clienteSelected ? <ListaLibretaDirecciones /> : <></>,
     },
   ];
 

@@ -1,5 +1,4 @@
 import React from "react";
-import { NavLink } from "react-router-dom";
 import {
   Card,
   Button,
@@ -10,11 +9,44 @@ import {
   Row,
   Col
 } from "antd";
+import { useDispatch, useSelector } from "react-redux";
+import { ClienteService } from "../../../servicios/clienteService";
+import { toastr } from "react-redux-toastr";
+import { selectCliente } from "../../../redux/actions/clienteActions";
 
 function DatosGenerales({closeModal})
 {
+  const dispatch = useDispatch();
+  const state = useSelector((state) => state);
+  const { profesiones } = state.profesion;
+  const { tiposDocumento } = state.tipoDocumento;
+  const { gruposCliente } = state.grupoCliente;
+
+  const clienteService = new ClienteService();
+  const [form] = Form.useForm();
+
   const onFinish = (values) => {
-    console.log(values);
+    clienteService.storeCliente(values).then(({data})=> {
+      if(data.state){
+        dispatch(selectCliente(data.cliente));
+        toastr.success(data.message);
+      }else{
+        toastr.error(data.message);
+      }
+    }).catch((err)=>{
+      console.log(err);
+      toastr.error("Error en el servidor.");
+      cancelarFormulario();
+    });
+  };
+
+  const cancelarFormulario = () => {
+    closeModal();
+    clearForm();
+  };
+
+  const clearForm = () => {
+    form.resetFields();
   };
 
   return(
@@ -22,11 +54,12 @@ function DatosGenerales({closeModal})
       layout="vertical"
       className="row-col"
       onFinish={onFinish}
+      form={form}
       initialValues={{
-        clienteGrupoId: "1",
-        profesionId: "1",
-        credito: "1.00",
-        tipoDocumento: "1"
+        clienteGrupoId: 1,
+        profesionId: 1,
+        credito: 0.00,
+        tipoDocumento: 1
       }}
     >
       <Card type="inner" className="card-datos-generales">
@@ -96,12 +129,6 @@ function DatosGenerales({closeModal})
               <Form.Item
                 label="Nombre de empresa"
                 name="nombreEmpresa"
-                rules={[
-                  {
-                    required: true,
-                    message: "Ingrese el nombre de la empresa.",
-                  },
-                ]}
               >
                 <Input placeholder="Ejm: Elenco Santísima" />
               </Form.Item>
@@ -123,7 +150,7 @@ function DatosGenerales({closeModal})
               <Form.Item
                 className="username"
                 label="Grupo de clientes"
-                name="clienteGrupoId"
+                name="grupoClienteId"
                 rules={[
                   {
                     required: true,
@@ -132,9 +159,9 @@ function DatosGenerales({closeModal})
                 ]}
               >
                 <Select>
-                  <Select.Option value="1">Grupo 1</Select.Option>
-                  <Select.Option value="2">Grupo 2</Select.Option>
-                  <Select.Option value="3">Grupo 3</Select.Option>
+                  {gruposCliente.map((grupo)=>
+                      <Select.Option key={grupo.id} value={grupo.id}>{grupo.nombre}</Select.Option>
+                  )}
                 </Select>
               </Form.Item>
             </Col>
@@ -151,10 +178,9 @@ function DatosGenerales({closeModal})
                 ]}
               >
                 <Select>
-                  <Select.Option value="1">Profesión 1</Select.Option>
-                  <Select.Option value="2">Profesión 2</Select.Option>
-                  <Select.Option value="3">Profesión 3</Select.Option>
-                  <Select.Option value="4">Profesión 4</Select.Option>
+                  {profesiones.map((profesion)=>
+                      <Select.Option key={profesion.id} value={profesion.id}>{profesion.nombre}</Select.Option>
+                  )}
                 </Select>
               </Form.Item>
             </Col>
@@ -181,7 +207,7 @@ function DatosGenerales({closeModal})
             <Col className="gutter-row" xs={24} md={12}>
               <Form.Item
                 label="Tipo de documento"
-                name="tipoDocumento"
+                name="tipoDocumentoId"
                 rules={[
                   {
                     required: true,
@@ -189,10 +215,10 @@ function DatosGenerales({closeModal})
                   },
                 ]}
               >
-                <Select >
-                  <Select.Option value="1">DNI</Select.Option>
-                  <Select.Option value="2">RUC</Select.Option>
-                  <Select.Option value="3">CARNET EXTRANJERIA</Select.Option>
+                <Select>
+                  {tiposDocumento.map((tipo)=>
+                      <Select.Option key={tipo.id} value={tipo.id}>{tipo.nombre}</Select.Option>
+                  )}
                 </Select>
               </Form.Item>
             </Col>
@@ -207,7 +233,7 @@ function DatosGenerales({closeModal})
         >
           Guardar
         </Button>
-        <Button type="danger" onClick={closeModal}>Cancelar</Button>
+        <Button type="danger" onClick={cancelarFormulario}>Cancelar</Button>
       </Form.Item>
     </Form>
   );

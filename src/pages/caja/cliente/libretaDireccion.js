@@ -1,5 +1,4 @@
 import React from "react";
-import { NavLink } from "react-router-dom";
 import {
   Card,
   Modal,
@@ -10,15 +9,47 @@ import {
   Col,
   InputNumber
 } from "antd";
+import { useSelector } from "react-redux";
+import { ClienteService } from "../../../servicios/clienteService";
+import { toastr } from "react-redux-toastr";
 
 function LibretaDireccion({status, handleClose})
 {
+  const state = useSelector((state) => state);
+  const { clienteSelected } = state.cliente;
+
+  const clienteService = new ClienteService();
+  const [form] = Form.useForm();
+
   const closeModal = () => {
     handleClose(false);
   };
 
   const handleSubmit = () => {
     closeModal();
+  };
+
+  const onFinish = (values) => {
+    clienteService.addDireccionCliente(values, clienteSelected.id).then(({data}) => {
+      if(data.state){
+        toastr.success(data.message);
+        closeModal();
+        clearForm();
+      }
+    }).catch((err)=> {
+      console.log(err);
+      toastr.error("Error en el servidor.");
+      cancelarFormulario();
+    });
+  };
+
+  const cancelarFormulario = () => {
+    closeModal();
+    clearForm();
+  };
+
+  const clearForm = () => {
+    form.resetFields();
   };
 
   return(
@@ -38,8 +69,18 @@ function LibretaDireccion({status, handleClose})
       width="80%"
     >
       <Form
+        form={form}
+        onFinish={onFinish}
         layout="vertical"
         className="row-col"
+        initialValues={{
+          nombres: clienteSelected.nombres,
+          apellidos: clienteSelected.apellidos,
+          nombreEmpresa: clienteSelected.nombreEmpresa,
+          telefono: clienteSelected.telefono,
+          codigoPostal: "+51",
+          pais: "Perú"
+        }}
       >
         <Card type="inner" className="card-libreta-direcciones">
           <div className="body-card-generales">
@@ -48,68 +89,38 @@ function LibretaDireccion({status, handleClose})
                 <Form.Item
                   label="Nombres"
                   name="nombres"
-                  rules={[
-                    {
-                      required: true,
-                      message: "Ingrese los nombres del cliente.",
-                    },
-                  ]}
                 >
-                  <Input placeholder="Ejm: Anita Carolina" />
+                  <Input disabled />
                 </Form.Item>
               </Col>
               <Col className="gutter-row" xs={24} md={12} >
                 <Form.Item
                   label="Apellidos"
                   name="apellidos"
-                  rules={[
-                    {
-                      required: true,
-                      message: "Ingrese los apellidos del cliente.",
-                    },
-                  ]}
                 >
-                  <Input placeholder="Ejm: Lopez Clemente" />
+                  <Input disabled />
                 </Form.Item>
               </Col>
               <Col className="gutter-row" xs={24} md={12} >
                 <Form.Item
                   label="Nombre de empresa"
                   name="nombreEmpresa"
-                  rules={[
-                    {
-                      required: true,
-                      message: "Ingrese el nombre de la empresa.",
-                    },
-                  ]}
                 >
-                  <Input placeholder="Ejm: Elenco Santísima" />
+                  <Input disabled />
                 </Form.Item>
               </Col>
               <Col className="gutter-row" xs={24} md={12} >
                 <Form.Item
                   label="Número de teléfono"
                   name="telefono"
-                  rules={[
-                    {
-                      required: true,
-                      message: "Ingrese el teléfono.",
-                    },
-                  ]}
                 >
-                  <InputNumber className="input-numerico" placeholder="Ejm: 934448755" minLength={9} maxLength={9} />
+                  <InputNumber className="input-numerico" disabled />
                 </Form.Item>
               </Col>
               <Col className="gutter-row" xs={24} md={12} >
                 <Form.Item
                   label="Pais"
                   name="pais"
-                  rules={[
-                    {
-                      required: true,
-                      message: "Ingrese el país.",
-                    },
-                  ]}
                 >
                   <Input placeholder="Ejm: Perú" />
                 </Form.Item>
@@ -174,12 +185,6 @@ function LibretaDireccion({status, handleClose})
                 <Form.Item
                   label="Código postal"
                   name="codigoPostal"
-                  rules={[
-                    {
-                      required: true,
-                      message: "Ingrese el código postal.",
-                    },
-                  ]}
                 >
                   <Input placeholder="Ejm: 12002" />
                 </Form.Item>
@@ -217,7 +222,7 @@ function LibretaDireccion({status, handleClose})
           >
             Guardar
           </Button>
-          <Button type="danger" onClick={closeModal}>Cancelar</Button>
+          <Button type="danger" onClick={cancelarFormulario}>Cancelar</Button>
         </Form.Item>
       </Form>
     </Modal>

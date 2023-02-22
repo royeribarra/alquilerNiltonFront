@@ -5,7 +5,9 @@ import {
 
 export const tipoDocumentoInitialState = {
     tipoDocumentoSelected: null,
-    tiposDocumento: [],
+    tiposDocumento: [
+        {id: 1, nombre: "ninguno"}
+    ],
 };
 
 export default function tipoDocumentoReducer(state = tipoDocumentoInitialState, action)

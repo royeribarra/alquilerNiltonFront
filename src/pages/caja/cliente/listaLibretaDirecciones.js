@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Avatar,
   Table,
@@ -7,6 +7,8 @@ import {
 } from "antd";
 import { NavLink } from "react-router-dom";
 import LibretaDireccion from "./libretaDireccion";
+import { DireccionClienteService } from "../../../servicios/direccionClienteService";
+import { useSelector } from "react-redux";
 
 const { Title } = Typography;
 
@@ -51,8 +53,16 @@ const deletebtn = [
 
 function ListaLibretaDirecciones()
 {
+  const state = useSelector((state) => state);
+  const { clienteSelected } = state.cliente;
+  const direccionClienteService = new DireccionClienteService();
   const [showModalLibretaDireccion, setShowModalLibretaDireccion] = useState(false);
   const [data, setData] = useState(false);
+  const [pagination, setPagination] = useState({
+    current: 1,
+    pageSize: 10,
+    total: 0,
+  });
 
   const openModal = () => {
     setShowModalLibretaDireccion(true);
@@ -62,23 +72,50 @@ function ListaLibretaDirecciones()
 
   };
 
+  const fetchAll = (paginationTab = pagination) => {
+    setShowModalLibretaDireccion(false);
+    direccionClienteService.getAllRows(clienteSelected.id).then(({ data }) => {
+      setPagination({
+        ...paginationTab,
+        current: data.current,
+        total: data.total,
+      });
+      setData(data.data);
+    });
+  };
+
+  useEffect(() => {
+    fetchAll();
+  }, []);
+
   const columns = [
     {
       title: "NOMBRE COMPLETO",
-      dataIndex: "nombres",
-      key: "nombres",
-      width: "32%",
+      dataIndex: "cliente",
+      key: "nombre completo",
+      render: (cliente) => {
+        const { nombres, apellidos } = cliente;
+        return(
+          <>{nombres + ' ' + apellidos}</>
+        );
+      }
     },
     {
       title: "TELÉFONO",
-      dataIndex: "telefono",
+      dataIndex: "cliente",
       key: "telefono",
+      render: (cliente) => {
+        const { telefono } = cliente;
+        return(
+          <>{telefono}</>
+        );
+      }
     },
   
     {
       title: "DIRECCIÓN",
-      key: "direccion",
-      dataIndex: "direccion",
+      key: "direccion1 ",
+      dataIndex: "direccion1",
     },
     {
       title: "EDITAR",
@@ -112,12 +149,12 @@ function ListaLibretaDirecciones()
       <Table
         columns={columns}
         dataSource={data}
-        pagination={false}
+        pagination={pagination}
         className="ant-border-space"
       />
       <LibretaDireccion 
         status={showModalLibretaDireccion}
-        handleClose={setShowModalLibretaDireccion}
+        handleClose={fetchAll}
       />
     </div>
   );

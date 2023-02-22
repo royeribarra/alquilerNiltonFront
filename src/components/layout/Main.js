@@ -16,25 +16,15 @@ import { Layout, Drawer, Affix } from "antd";
 import Sidenav from "./Sidenav";
 import Header from "./Header";
 import Footer from "./Footer";
-import MainRoutes from "../../routes/mainRoutes";
 import Loader from "../loaderComponent/loaderComponent";
 import { useDispatch, useSelector } from "react-redux";
-import { GrupoClienteService } from "../../servicios/grupoClienteService";
-import { ProfesionService } from "../../servicios/profesionService";
-import { TipoDocumentoService } from "../../servicios/tipoDocumentoService";
-import { fillProfesiones } from "../../redux/actions/profesionActions";
-import { fillGruposCliente } from "../../redux/actions/grupoClienteActions";
-import { fillTiposDocumento } from "../../redux/actions/tipoDocumentoActions";
+import FillData from "./fillData";
 
 const { Header: AntHeader, Content, Sider } = Layout;
 
 function Main() 
 {
   let history = useNavigate();
-  const grupoClienteService = new GrupoClienteService();
-  const profesionService = new ProfesionService();
-  const tipoDocumentoService = new TipoDocumentoService();
-  const dispatch = useDispatch();
   const state = useSelector((state) => state);
   const { show } = state.loader;
   const [visible, setVisible] = useState(false);
@@ -42,6 +32,7 @@ function Main()
   const [sidenavColor, setSidenavColor] = useState("#1890ff");
   const [sidenavType, setSidenavType] = useState("transparent");
   const [fixed, setFixed] = useState(false);
+  const [executeRedux, setExecuteRedux] = useState(false);
 
   const openDrawer = () => setVisible(!visible);
   const handleSidenavType = (type) => setSidenavType(type);
@@ -51,36 +42,12 @@ function Main()
   let { pathname } = useLocation();
   pathname = pathname.replace("/", "");
 
-  // useEffect(() => {
-  //   if (pathname === "rtl") {
-  //     setPlacement("left");
-  //   } else {
-  //     setPlacement("right");
-  //   }
-  // }, [pathname]);
-
-  // useEffect(()=> {
-  //   grupoClienteService.getAllToSelect().then(({data})=> {
-  //     dispatch(fillGruposCliente(data));
-  //   });
-  // }, []);
-
-  // useEffect(()=> {
-  //   profesionService.getAllToSelect().then(({data})=> {
-  //     dispatch(fillProfesiones(data));
-  //   });
-  // }, []);
-
-  // useEffect(()=> {
-  //   tipoDocumentoService.getAllToSelect().then(({data})=> {
-  //     dispatch(fillTiposDocumento(data));
-  //   });
-  // }, []);
-
   useEffect(() => {
+    console.log("me ejectuo")
     if (!localStorage.getItem("tknData")) {
       history('/login');
     }else{
+      setExecuteRedux(true);
       history('/admin/');
     }
   }, []);
@@ -91,6 +58,9 @@ function Main()
         pathname === "profile" ? "layout-profile" : ""
       } ${pathname === "rtl" ? "layout-dashboard-rtl" : ""}`}
     >
+      {
+        executeRedux && <FillData />
+      }
       <div className={ show ? "" : "loaderInvisible"}>
         <Loader></Loader>
       </div>

@@ -5,7 +5,9 @@ import {
 
 export const grupoClienteInitialState = {
     grupoClienteSelected: null,
-    gruposCliente: [],
+    gruposCliente: [
+        {id: 1, nombre: "ninguno"}
+    ],
 };
 
 export default function grupoClienteReducer(state = grupoClienteInitialState, action)
