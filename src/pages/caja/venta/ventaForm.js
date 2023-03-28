@@ -32,148 +32,110 @@ function Requisitos({status, handleClose})
   const handleSubmit = () => {
     closeModal();
   };
+
+  const selectRequisito = (e) => {
+    console.log(e.target.value)
+  };
+
   return(
     <Modal 
-        title="Registro de alquiler" 
-        open={status} 
-        onOk={handleSubmit} 
-        onCancel={closeModal}
-        okText="Confirmar"
-        cancelText="Cancelar"
-        footer={null}
-        width="95%"
-      >
-      <Form.Item name="checkbox-group" label="Requerimientos">
-        <Checkbox.Group>
-          <Table
-            pagination={false}
-            columns={[
-              {
-                title: 'Requerimiento',
-                dataIndex: 'requerimiento',
-                key: 'requerimiento',
-              },
-              {
-                title: 'Petición',
-                dataIndex: 'peticion',
-                key: 'peticion',
-              },
-              {
-                title: 'Dejado',
-                dataIndex: 'dejado',
-                key: 'dejado',
-              },
-              {
-                title: 'Notas',
-                dataIndex: 'notas',
-                key: 'notas',
-              },
-              {
-                title: 'Afectación',
-                dataIndex: 'afectacion',
-                key: 'afectacion',
-              },
-              {
-                title: 'Seleccionar',
-                dataIndex: 'seleccionar',
-                key: 'notas',
-                render: (id) => {
-                  return (
-                    <Col span={8}>
-                      <Checkbox
-                        value="A"
-                        style={{
-                          lineHeight: '32px',
-                        }}
-                      >
-                        A
-                      </Checkbox>
-                    </Col>
-                  );
-                }
-              },
+      title="Requerimientos" 
+      open={status} 
+      onOk={handleSubmit} 
+      onCancel={closeModal}
+      okText="Confirmar"
+      cancelText="Cancelar"
+      footer={null}
+      width="95%"
+    >
+      <Table
+        pagination={false}
+        columns={[
+          {
+            title: 'Requerimiento',
+            dataIndex: 'requerimiento',
+            key: 'requerimiento',
+          },
+          {
+            title: 'Petición',
+            dataIndex: 'peticion',
+            key: 'peticion',
+          },
+          {
+            title: 'Dejado',
+            dataIndex: 'dejado',
+            key: 'dejado',
+          },
+          {
+            title: 'Notas',
+            dataIndex: 'notas',
+            key: 'notas',
+          },
+          {
+            title: 'Afectación',
+            dataIndex: 'afectacion',
+            key: 'afectacion',
+          },
+          {
+            title: 'Seleccionar',
+            dataIndex: 'key',
+            key: 'key',
+            render: (key) => {
+              return (
+                <Col span={8}>
+                  <Checkbox
+                    value={key}
+                    onChange={selectRequisito}
+                  />
+                </Col>
+              );
+            }
+          },
 
-            ]}
-            dataSource={[
-              {
-                key: '1',
-                name: 'Mike',
-                age: 32,
-                address: '10 Downing Street',
-              },
-              {
-                key: '2',
-                name: 'John',
-                age: 42,
-                address: '10 Downing Street',
-              },
-            ]}
-          />
-          <Row>
-            <Col span={8}>
-              <Checkbox
-                value="A"
-                style={{
-                  lineHeight: '32px',
-                }}
-              >
-                A
-              </Checkbox>
-            </Col>
-            <Col span={8}>
-              <Checkbox
-                value="B"
-                style={{
-                  lineHeight: '32px',
-                }}
-                disabled
-              >
-                B
-              </Checkbox>
-            </Col>
-            <Col span={8}>
-              <Checkbox
-                value="C"
-                style={{
-                  lineHeight: '32px',
-                }}
-              >
-                C
-              </Checkbox>
-            </Col>
-            <Col span={8}>
-              <Checkbox
-                value="D"
-                style={{
-                  lineHeight: '32px',
-                }}
-              >
-                D
-              </Checkbox>
-            </Col>
-            <Col span={8}>
-              <Checkbox
-                value="E"
-                style={{
-                  lineHeight: '32px',
-                }}
-              >
-                E
-              </Checkbox>
-            </Col>
-            <Col span={8}>
-              <Checkbox
-                value="F"
-                style={{
-                  lineHeight: '32px',
-                }}
-              >
-                F
-              </Checkbox>
-            </Col>
-          </Row>
-        </Checkbox.Group>
-      </Form.Item>
+        ]}
+        dataSource={[
+          {
+            key: '1',
+            requerimiento: 'Licencia de conducir',
+            peticion: 0.00,
+            dejado: '0.00',
+            notas: '',
+            afectacion: 'Texto descriptivo'
+          },
+          {
+            key: '2',
+            requerimiento: 'Garantía de alquiler',
+            peticion: 0.00,
+            dejado: '0.00',
+            notas: '',
+            afectacion: 'Texto descriptivo'
+          },
+          {
+            key: '3',
+            requerimiento: 'DNI',
+            peticion: 1.00,
+            dejado: '0.00',
+            notas: '',
+            afectacion: 'Texto descriptivo'
+          },
+          {
+            key: '4',
+            requerimiento: 'Recibo de luz o agua',
+            peticion: 1.00,
+            dejado: '0.00',
+            notas: '',
+            afectacion: 'Texto descriptivo'
+          },
+          {
+            key: '5',
+            requerimiento: 'Carné de extranjería',
+            peticion: 0.00,
+            dejado: '0.00',
+            notas: '',
+            afectacion: 'Texto descriptivo'
+          },
+        ]}
+      />
     </Modal>
   );
 }

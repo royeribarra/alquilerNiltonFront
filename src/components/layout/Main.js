@@ -35,9 +35,6 @@ function Main()
   const [executeRedux, setExecuteRedux] = useState(false);
 
   const openDrawer = () => setVisible(!visible);
-  const handleSidenavType = (type) => setSidenavType(type);
-  const handleSidenavColor = (color) => setSidenavColor(color);
-  const handleFixedNavbar = (type) => setFixed(type);
 
   let { pathname } = useLocation();
   pathname = pathname.replace("/", "");
@@ -48,7 +45,7 @@ function Main()
       history('/login');
     }else{
       setExecuteRedux(true);
-      history('/admin/');
+      history(`/admin/`);
     }
   }, []);
 

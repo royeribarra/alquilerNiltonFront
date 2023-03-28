@@ -6,15 +6,37 @@ export class ClienteService extends MainService {
     super(url);
   }
 
-  storeCliente(body) {
+  storeCliente(body) 
+  {
     return axios.post(`${this.clearUrl}/cliente/crear`, body, this.options);
   }
 
-  addDireccionCliente(body, id) {
-    return axios.post(`${this.clearUrl}/cliente/${id}/agregar-direccion`, body, this.options);
+  addDireccionCliente(body, clienteId) 
+  {
+    return axios.post(`${this.clearUrl}/cliente/${clienteId}/agregar-direccion`, body, this.options);
   }
 
-  updateCliente(body, id) {
+  editDireccionCliente(body, direccionId) 
+  {
+    return axios.put(`${this.clearUrl}/direccion-cliente/${direccionId}/editar`, body, this.options);
+  }
+
+  deleteDireccionCliente(direccionId) 
+  {
+    return axios.delete(`${this.clearUrl}/direccion-cliente/${direccionId}/eliminar`, this.options);
+  }
+
+  updateCliente(body, id) 
+  {
     return axios.put(`${this.clearUrl}/cliente/${id}`, body, this.options);
+  }
+
+  searchClientePorDni(dni)
+  {
+    return axios.get(`${this.clearUrl}/cliente/buscar-dni?dni=${dni}`, this.options);
+  }
+
+  getAllToSelect() {
+    return axios.get(`${this.clearUrl}/clientes/seleccion/todos`, this.options);
   }
 }

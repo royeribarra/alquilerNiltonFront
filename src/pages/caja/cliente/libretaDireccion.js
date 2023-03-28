@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   Card,
   Modal,
@@ -16,8 +16,8 @@ import { toastr } from "react-redux-toastr";
 function LibretaDireccion({status, handleClose})
 {
   const state = useSelector((state) => state);
-  const { clienteSelected } = state.cliente;
-
+  const { clienteSelected, direccionClienteSelected } = state.cliente;
+  
   const clienteService = new ClienteService();
   const [form] = Form.useForm();
 
@@ -25,25 +25,37 @@ function LibretaDireccion({status, handleClose})
     handleClose(false);
   };
 
-  const handleSubmit = () => {
-    closeModal();
+  const onFinish = (values) => {
+    direccionClienteSelected ? editLibretaDireccion(values) : storeLibretaDireccion(values);
   };
 
-  const onFinish = (values) => {
-    clienteService.addDireccionCliente(values, clienteSelected.id).then(({data}) => {
+  const storeLibretaDireccion = (data) => {
+    clienteService.addDireccionCliente(data, clienteSelected.id).then(({data}) => {
       if(data.state){
         toastr.success(data.message);
-        closeModal();
-        clearForm();
+        cancelForm();
       }
     }).catch((err)=> {
       console.log(err);
       toastr.error("Error en el servidor.");
-      cancelarFormulario();
+      cancelForm();
+    });
+  }
+
+  const editLibretaDireccion = (data) => {
+    clienteService.editDireccionCliente(data, direccionClienteSelected.id).then(({data}) => {
+      if(data.state){
+        toastr.success(data.message);
+        cancelForm();
+      }
+    }).catch((err)=> {
+      console.log(err);
+      toastr.error("Error en el servidor.");
+      cancelForm();
     });
   };
 
-  const cancelarFormulario = () => {
+  const cancelForm = () => {
     closeModal();
     clearForm();
   };
@@ -51,6 +63,13 @@ function LibretaDireccion({status, handleClose})
   const clearForm = () => {
     form.resetFields();
   };
+
+  useEffect(()=> {
+    if(direccionClienteSelected)
+    {
+      form.setFieldsValue(direccionClienteSelected);
+    }
+  }, [direccionClienteSelected]);
 
   return(
     <Modal 
@@ -61,9 +80,8 @@ function LibretaDireccion({status, handleClose})
           <p>Detalles de la dirección del cliente.</p>
         </div>
       }
-      open={status} 
-      onOk={handleSubmit} 
-      onCancel={closeModal} 
+      open={status}
+      onCancel={cancelForm} 
       className="modal-libreta"
       footer={null}
       width="80%"
@@ -79,7 +97,12 @@ function LibretaDireccion({status, handleClose})
           nombreEmpresa: clienteSelected.nombreEmpresa,
           telefono: clienteSelected.telefono,
           codigoPostal: "+51",
-          pais: "Perú"
+          pais: "Perú",
+          provincia: '',
+          distrito: '',
+          tipoDireccion: '',
+          direccion1: '',
+          direccion2: ''
         }}
       >
         <Card type="inner" className="card-libreta-direcciones">
@@ -222,7 +245,7 @@ function LibretaDireccion({status, handleClose})
           >
             Guardar
           </Button>
-          <Button type="danger" onClick={cancelarFormulario}>Cancelar</Button>
+          <Button type="danger" onClick={cancelForm}>Cancelar</Button>
         </Form.Item>
       </Form>
     </Modal>

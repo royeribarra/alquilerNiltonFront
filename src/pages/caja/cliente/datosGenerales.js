@@ -56,10 +56,10 @@ function DatosGenerales({closeModal})
       onFinish={onFinish}
       form={form}
       initialValues={{
-        clienteGrupoId: 1,
+        grupoClienteId: 1,
         profesionId: 1,
         credito: 0.00,
-        tipoDocumento: 1
+        tipoDocumentoId: 1
       }}
     >
       <Card type="inner" className="card-datos-generales">

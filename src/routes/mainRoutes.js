@@ -1,5 +1,4 @@
-import { Routes, Route, Navigate } from "react-router-dom";
-import Home from "../pages/Home";
+import { Routes, Route } from "react-router-dom";
 import Tables from "../pages/Tables";
 import Billing from "../pages/Billing";
 import Rtl from "../pages/Rtl";
@@ -9,12 +8,13 @@ import SignIn from "../pages/Login";
 
 import Clientes from "../pages/cliente/clientes";
 import ClienteForm from "../pages/cliente/clienteForm/clienteForm";
-import Productos from "../pages/producto/productos";
 import ProductoForm from "../pages/producto/productoForm/productoForm";
 import Ventas from "../pages/venta/ventas";
 import CrearVenta from "../pages/venta/crearVenta";
 import PageUsuario from "../pages/usuario/pageUsuario";
 import PageCaja from "../pages/caja/pageCaja";
+import Dashboard from "../pages/Dashboard";
+import PageProducto from "../pages/producto/pageProducto";
 
 function MainRoutes()
 {
@@ -23,8 +23,8 @@ function MainRoutes()
       <Route exact path="/sign-up" element= {<SignUp/>} />
       <Route exact path="/sign-in" element= {<SignIn/>}/>
       
-      <Route exact path="/" element= {<Home/>} />
-      <Route exact path="dashboard" element= {<Home/>} />
+      <Route exact path="/" element= {<Dashboard/>} />
+      <Route exact path="dashboard" element= {<Dashboard />} />
       <Route exact path="/tables" element= {<Tables/>} />
       <Route exact path="/billing" element= {<Billing/>} />
       <Route exact path="/rtl" element= {<Rtl/>} />
@@ -39,7 +39,7 @@ function MainRoutes()
       <Route exact path="/ventas" element={<Ventas/> } />
       <Route exact path="/crear-venta" element={<CrearVenta/> } />
 
-      <Route exact path="/productos" element={<Productos/> } />
+      <Route exact path="/producto" element={<PageProducto/> } />
       <Route exact path="/producto/:productoId" element={<ProductoForm/> } />
       <Route exact path="/crear-producto" element={<ProductoForm/> } />
 

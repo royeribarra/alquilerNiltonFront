@@ -1,16 +1,13 @@
 import React, { useEffect, useState } from "react";
 import {
-  Avatar,
   Table,
   Button,
-  Typography,
 } from "antd";
-import { NavLink } from "react-router-dom";
 import LibretaDireccion from "./libretaDireccion";
 import { DireccionClienteService } from "../../../servicios/direccionClienteService";
-import { useSelector } from "react-redux";
-
-const { Title } = Typography;
+import { useDispatch, useSelector } from "react-redux";
+import { selectDireccionCliente } from "../../../redux/actions/clienteActions";
+import ModalEliminarDireccion from "./eliminarDireccion";
 
 const pencil = [
   <svg
@@ -53,10 +50,13 @@ const deletebtn = [
 
 function ListaLibretaDirecciones()
 {
+  const dispatch = useDispatch();
   const state = useSelector((state) => state);
-  const { clienteSelected } = state.cliente;
+  const { clienteSelected, direccionClienteSelected } = state.cliente;
+
   const direccionClienteService = new DireccionClienteService();
   const [showModalLibretaDireccion, setShowModalLibretaDireccion] = useState(false);
+  const [showEliminarDireccion, setShowEliminarDireccion] = useState(false);
   const [data, setData] = useState(false);
   const [pagination, setPagination] = useState({
     current: 1,
@@ -64,16 +64,27 @@ function ListaLibretaDirecciones()
     total: 0,
   });
 
-  const openModal = () => {
+  const openModalForm = () => {
     setShowModalLibretaDireccion(true);
   };
 
-  const deleteRecord = () => {
+  const openModalDelete = () => {
+    setShowEliminarDireccion(true);
+  };
 
+  const editRecord = (id, row) => {
+    dispatch(selectDireccionCliente(row));
+    openModalForm();
+  };
+
+  const deleteRecord = (id, row) => {
+    dispatch(selectDireccionCliente(row));
+    openModalDelete();
   };
 
   const fetchAll = (paginationTab = pagination) => {
     setShowModalLibretaDireccion(false);
+    setShowEliminarDireccion(false);
     direccionClienteService.getAllRows(clienteSelected.id).then(({ data }) => {
       setPagination({
         ...paginationTab,
@@ -121,9 +132,9 @@ function ListaLibretaDirecciones()
       title: "EDITAR",
       key: "editar",
       dataIndex: "id",
-      render: (id) => {
+      render: (id, row) => {
         return (
-          <Button type="link" className="darkbtn" onClick={openModal}>
+          <Button type="link" className="darkbtn" onClick={() => editRecord(id, row)}>
             {pencil} Editar
           </Button>
         );
@@ -145,7 +156,7 @@ function ListaLibretaDirecciones()
 
   return(
     <div>
-      <Button className="crear-direccion-cliente" onClick={openModal}>Agregar una dirección</Button>
+      <Button className="crear-direccion-cliente" onClick={openModalForm}>Agregar una dirección</Button>
       <Table
         columns={columns}
         dataSource={data}
@@ -154,6 +165,10 @@ function ListaLibretaDirecciones()
       />
       <LibretaDireccion 
         status={showModalLibretaDireccion}
+        handleClose={fetchAll}
+      />
+      <ModalEliminarDireccion 
+        status={showEliminarDireccion}
         handleClose={fetchAll}
       />
     </div>

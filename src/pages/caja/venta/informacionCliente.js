@@ -13,10 +13,16 @@ import {
 } from "antd";
 import { NavLink } from "react-router-dom";
 import Cliente from "../cliente/cliente";
+import { ClienteService } from "../../../servicios/clienteService";
+import { useDispatch, useSelector } from "react-redux";
+import { selectCliente } from "../../../redux/actions/clienteActions";
 
+const { Search } = Input;
 const { Option } = Select;
 
 const SearchInput = ({determinarProceso, placeholder, style}) => {
+  const state = useSelector((state) => state);
+  const { clienteSelected } = state.cliente;
   const [data, setData] = useState([]);
   const [value, setValue] = useState();
 
@@ -33,12 +39,12 @@ const SearchInput = ({determinarProceso, placeholder, style}) => {
     determinarProceso(newValue, data);
   };
 
-  const options = data.map((d) => <Option key={d.id} value={d.id} precio={d.precio_unitario}>{d.nombre}</Option>);
+  const options = data.map((d) => <Option key={d.id} value={d.id}>{d.nombres}</Option>);
   return (
     <Select
       className="buscar-cliente"
       showSearch
-      value={value}
+      value={clienteSelected.nombres + ' ' + clienteSelected.apellidos}
       placeholder={placeholder}
       style={style}
       defaultActiveFirstOption={false}
@@ -55,21 +61,16 @@ const SearchInput = ({determinarProceso, placeholder, style}) => {
 
 function InformacionCliente()
 {
-  const [idProducto, setIdProducto] = useState(0);
-  const [formProducto] = Form.useForm();
-  const [existeProducto, setExisteProducto] = useState(true);
+  const dispatch = useDispatch();
+  const state = useSelector((state) => state);
+  const { clienteSelected } = state.cliente;
+
+  const clienteService = new ClienteService();
+  const [formInfoCliente] = Form.useForm();
   const [showModalCliente, setShowModalCliente] = useState(false);
 
   const obtenerCliente = (e, data) => {
-    setIdProducto(data.key);
-    if(data.children !== "Otro producto"){
-      formProducto.setFieldsValue({
-        precio_unitario: data.precio
-      });
-      setExisteProducto(true);
-    }else if(data.children === "Otro producto"){
-      setExisteProducto(false);
-    }
+    console.log(data)
   }
 
   const onFinish = () => {
@@ -79,52 +80,59 @@ function InformacionCliente()
   const crearCliente = () => {
     setShowModalCliente(true);
   };
+
+  const editarCliente = () => {
+    setShowModalCliente(true);
+  };
+
+  const buscarCliente = (dni) => {
+    clienteService.searchClientePorDni(dni).then(({data})=> {
+      dispatch(selectCliente(data));
+      console.log(data)
+      formInfoCliente.setFieldsValue({
+        clienteId: data ? data.nombres : '',
+        cantidadVisitas: data ? data.nombres : '',
+
+      });
+    });
+  };
   
   return(
     <div>
       <Form
-        className="form-info-cliente"
         layout="vertical"
-        onFinish={onFinish}
-        initialValues={{
-          clienteGrupoId: "1",
-          profesionId: "1",
-          credito: "1.00",
-          estrellas: 4,
-          cantidadVisitas: 1
-        }}
+        form={formInfoCliente}
       >
         <Card
+          className="card-informacion-cliente"
           title="Información cliente"
           extra={
-            <>
-              <Button onClick={crearCliente}>Crear cliente</Button>
-            </>
+            <div>
+              <Button style={{ padding: "0 5px", margin: "0 5px" }} onClick={crearCliente}>Crear</Button>
+              {
+                clienteSelected ? 
+                <Button style={{ padding: "0 5px", margin: "0 5px" }} onClick={editarCliente}>Editar</Button> : ''
+              }
+            </div>
           }
         >
           <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
-            <Col className="gutter-row" xs={24} md={12}>
+            <Col className="gutter-row" xs={24} md={8}>
               <Form.Item
                 name="dni"
-                rules={[
-                  {
-                    required: true,
-                    message: "Ingrese los nombres del cliente.",
-                  },
-                ]}
               >
-                <Input className="dni-info-cliente" placeholder="dni: 33233333" maxLength={8} minLength={8} />
+              <Search
+                className="buscar-cliente"
+                placeholder="Dni: ..."
+                allowClear
+                onSearch={buscarCliente}
+              />
               </Form.Item>
+              
             </Col>
-            <Col className="gutter-row" xs={24} md={12} >
+            <Col className="gutter-row" xs={24} md={16} >
               <Form.Item
                 name="clienteId"
-                rules={[
-                  {
-                    required: true,
-                    message: "Ingrese los apellidos del cliente.",
-                  },
-                ]}
               >
                 <SearchInput
                   placeholder="Buscar cliente..."
@@ -132,12 +140,12 @@ function InformacionCliente()
                 />
               </Form.Item>
             </Col>
-            <Col className="gutter-row" xs={24} md={12} >
+            <Col className="gutter-row" xs={24} md={8} >
               <Form.Item name="cantidadVisitas" label="Número de visitas">
                 <InputNumber className="cantidad-visitas" />
               </Form.Item>
             </Col>
-            <Col className="gutter-row" xs={24} md={12} >
+            <Col className="gutter-row" xs={24} md={16} >
               <Form.Item name="estrellas" label="Cliente normal">
                 <Rate />
               </Form.Item>
@@ -147,7 +155,12 @@ function InformacionCliente()
                 label="Fecha entrega"
                 name="fechaEntrega"
               >
-                <DatePicker className="cliente-fecha-entrega" placeholder="Fecha de entrega" />
+                <DatePicker 
+                  showTime = {{ use12hours: true, format: "hh:mm a" }}  
+                  className="cliente-fecha-entrega" 
+                  placeholder="Fecha de entrega" 
+                  format="DD/MM/YYYY hh:mm a"
+                />
               </Form.Item>
             </Col>
             <Col className="gutter-row" xs={24} md={12} >
@@ -155,7 +168,12 @@ function InformacionCliente()
                 label="Fecha devolución"
                 name="fechaDevolucion"
               >
-                <DatePicker className="cliente-fecha-devolucion" placeholder="Fecha devolución" />
+                <DatePicker 
+                  showTime = {{ use12hours: true, format: "hh:mm a" }} 
+                  className="cliente-fecha-devolucion" 
+                  placeholder="Fecha devolución" 
+                  format="DD/MM/YYYY hh:mm a"
+                />
               </Form.Item>
             </Col>
           </Row>
@@ -166,7 +184,6 @@ function InformacionCliente()
         handleClose={setShowModalCliente}
       /> 
     </div>
-    
   );
 }
 

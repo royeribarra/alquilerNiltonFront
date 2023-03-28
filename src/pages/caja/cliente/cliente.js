@@ -41,7 +41,7 @@ function Cliente({status, handleClose})
 
   return(
     <Modal 
-      title="Crear Cliente" 
+      title={clienteSelected ? "Editar Cliente": "Crear Cliente"}
       open={status} 
       onOk={handleSubmit} 
       onCancel={closeModal}

@@ -11,6 +11,7 @@ import grupoClienteReducer from "./reducers/grupoClienteReducer";
 import profesionReducer from "./reducers/profesionReducer";
 import tipoDocumentoReducer from "./reducers/tipoDocumentoReducer";
 import clienteReducer from "./reducers/clienteReducer";
+import { productosReducer } from "./reducers/productosReducer";
 
 const reducer = combineReducers({
     cliente: clienteReducer,
@@ -21,6 +22,7 @@ const reducer = combineReducers({
     tipoDocumento: tipoDocumentoReducer,
     toastr: toastrReducer,
     user: userReducer,
+    productos: productosReducer
 });
 
 export default createStore(reducer, {},

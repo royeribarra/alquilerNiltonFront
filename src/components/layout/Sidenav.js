@@ -208,7 +208,7 @@ function Sidenav({ color }) {
           </NavLink>
         </Menu.Item>
         <Menu.Item key="4">
-          <NavLink to="productos">
+          <NavLink to="producto">
             <span
               className="icon"
               style={{

@@ -1,10 +1,12 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 import {
-  Card,
+  Input,
+  Switch,
+  Checkbox,
   Button,
   Form,
-  Input,
+  Modal,
   Select,
   InputNumber,
   Row,
@@ -13,39 +15,51 @@ import {
 } from "antd";
 import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
 import "./producto.css";
+import TextArea from "antd/lib/input/TextArea";
 
-function ProductoForm()
+function ProductoForm({status, handleClose, tipoProductoForm})
 {
+  const closeModal = () => {
+    handleClose(false);
+  };
+
+  const handleSubmit = () => {
+    closeModal();
+  };
+
   const onFinish = (values) => {
     console.log(values);
   };
 
   return(
-    <Form
-      layout="vertical"
-      className="row-col"
-      onFinish={onFinish}
-      initialValues={{
-        clienteGrupoId: "1",
-        profesionId: "1",
-        credito: "1.00",
-        tipoDocumento: "1"
-      }}
+    <Modal 
+      title={"Crear " + tipoProductoForm.nombre}
+      open={status} 
+      onOk={handleSubmit} 
+      onCancel={closeModal}
+      okText="Confirmar"
+      cancelText="Cancelar"
+      footer={null}
+      width="95%"
     >
-      <Card type="inner" title="Información general" className="card-datos-generales">
+      <Form
+        layout="vertical"
+        className="row-col"
+        onFinish={onFinish}
+        initialValues={{
+          clienteGrupoId: "1",
+          profesionId: "1",
+          credito: "1.00",
+          tipoDocumento: "1"
+        }}
+      >
+        <h3>Información general</h3>
         <div className="body-card-generales">
-          <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}
-          >
+          <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
             <Col className="gutter-row" xs={24} md={12}>
               <Form.Item
                 label="Tipo de prenda"
-                name="tipoId"
-                rules={[
-                  {
-                    required: true,
-                    message: "Ingrese el tipo de prenda.",
-                  },
-                ]}
+                name="tipoProductoId"
               >
                 <Select>
                   <Select.Option value="1">Terno</Select.Option>
@@ -59,14 +73,8 @@ function ProductoForm()
             </Col>
             <Col className="gutter-row" xs={24} md={12}>
               <Form.Item
-                label="Apellidos"
-                name="apellidos"
-                rules={[
-                  {
-                    required: true,
-                    message: "Ingrese los apellidos del cliente.",
-                  },
-                ]}
+                label="Almacén"
+                name="almacenId"
               >
                 <Select>
                   <Select.Option value="1">Almacén 1</Select.Option>
@@ -81,12 +89,6 @@ function ProductoForm()
               <Form.Item
                 label="Marca"
                 name="marca"
-                rules={[
-                  {
-                    required: true,
-                    message: "Seleccione una marca.",
-                  },
-                ]}
               >
                 <Select>
                   <Select.Option value="1">Sin definir</Select.Option>
@@ -99,12 +101,6 @@ function ProductoForm()
               <Form.Item
                 label="Color"
                 name="color"
-                rules={[
-                  {
-                    required: true,
-                    message: "Ingrese el teléfono.",
-                  },
-                ]}
               >
                 <Select>
                   <Select.Option value="1">Sin definir</Select.Option>
@@ -117,12 +113,6 @@ function ProductoForm()
               <Form.Item
                 label="Modelo tela"
                 name="modelaTelaId"
-                rules={[
-                  {
-                    required: true,
-                    message: "Ingrese el nombre de la empresa.",
-                  },
-                ]}
               >
                 <Select>
                   <Select.Option value="1">Sin definir</Select.Option>
@@ -135,12 +125,6 @@ function ProductoForm()
               <Form.Item
                 label="Tela o material"
                 name="telaId"
-                rules={[
-                  {
-                    required: true,
-                    message: "Seleccione una marca.",
-                  },
-                ]}
               >
                 <Select>
                   <Select.Option value="1">Sin definir</Select.Option>
@@ -153,12 +137,6 @@ function ProductoForm()
               <Form.Item
                 label="Ocasión"
                 name="ocasionId"
-                rules={[
-                  {
-                    required: true,
-                    message: "Ingrese el teléfono.",
-                  },
-                ]}
               >
                 <Select>
                   <Select.Option value="1">Sin definir</Select.Option>
@@ -170,13 +148,7 @@ function ProductoForm()
             <Col className="gutter-row" xs={24} md={8}>
               <Form.Item
                 label="Modelo prenda"
-                name="modelaPrendaId"
-                rules={[
-                  {
-                    required: true,
-                    message: "Ingrese el nombre de la empresa.",
-                  },
-                ]}
+                name="modeloPrendaId"
               >
                 <Select>
                   <Select.Option value="1">Sin definir</Select.Option>
@@ -203,12 +175,6 @@ function ProductoForm()
               <Form.Item
                 label="Color de filos"
                 name="colorFilos"
-                rules={[
-                  {
-                    required: true,
-                    message: "Seleccione un grupo de cliente.",
-                  },
-                ]}
               >
                 <Select>
                   <Select.Option value="1">Sin definir</Select.Option>
@@ -257,7 +223,6 @@ function ProductoForm()
             </Col>
             <Col className="gutter-row" xs={24} md={9}>
               <Form.List name="pliegues">
-                  
                 {(fields, { add, remove }) => (
                   <>
                   <h1>Pliegues</h1>
@@ -319,10 +284,8 @@ function ProductoForm()
               </div>
               <div>
               <Form.List name="entalle">
-                  
                   {(fields, { add, remove }) => (
                     <>
-                    
                       {fields.map(({ key, name, ...restField }) => (
                         <Space
                           key={key}
@@ -363,72 +326,152 @@ function ProductoForm()
             </Col>
           </Row>
         </div>
-      </Card>
-      <Card type="inner" title="Documento de identificación" className="card-identificacion">
-        <div className="body-card-identificacion">
-          <Row gutter={{
-              xs: 8,
-              sm: 16,
-              md: 24,
-              lg: 32,
-            }}
-          >
-            <Col 
-              className="gutter-row" 
-              xs={24}
-              md={12}
-            >
-              <Form.Item
-                label="Número de documento"
-                name="documentoIdentidad"
-                rules={[
-                  {
-                    required: true,
-                    message: "Ingrese el documento de identidad.",
-                  },
-                ]}
-              >
-                <InputNumber className="input-numerico" placeholder="Ejm: 80019405" minLength={8} maxLength={8} />
-              </Form.Item>
+        <div>
+          <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
+            <Col className="gutter-row" xs={24} md={6}>
+              Código
             </Col>
-            <Col 
-              className="gutter-row" 
-              xs={24}
-              md={12}
-            >
-              <Form.Item
-                label="Tipo de documento"
-                name="tipoDocumento"
-                rules={[
-                  {
-                    required: true,
-                    message: "Seleccione un tipo de documento.",
-                  },
-                ]}
-              >
-                <Select >
-                  <Select.Option value="1">DNI</Select.Option>
-                  <Select.Option value="2">RUC</Select.Option>
-                  <Select.Option value="3">CARNET EXTRANJERIA</Select.Option>
-                </Select>
-              </Form.Item>
+            <Col className="gutter-row" xs={24} md={2}>
+              Tono
             </Col>
-          </Row> 
+            <Col className="gutter-row" xs={24} md={4}>
+              Talla(tam.prenda)
+            </Col>
+            <Col className="gutter-row" xs={24} md={2}>
+              Nro. salidas
+            </Col>
+            <Col className="gutter-row" xs={24} md={2}>
+              Base
+            </Col>
+            <Col className="gutter-row" xs={24} md={4}>
+              Precio venta
+            </Col>
+            <Col className="gutter-row" xs={24} md={4}>
+              Config. precio
+            </Col>
+          </Row>
+          <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
+            <Col className="gutter-row" xs={24} md={6}>
+              Terno
+              <Input />
+            </Col>
+            <Col className="gutter-row" xs={24} md={2}>
+              <Switch defaultChecked />
+            </Col>
+            <Col className="gutter-row" xs={24} md={4}>
+              <Input />
+            </Col>
+            <Col className="gutter-row" xs={24} md={2}>
+              <InputNumber />
+            </Col>
+            <Col className="gutter-row" xs={24} md={2}>
+              <InputNumber />
+            </Col>
+            <Col className="gutter-row" xs={24} md={4}>
+              <InputNumber />
+            </Col>
+            <Col className="gutter-row" xs={24} md={4}>
+              Config. precio
+            </Col>
+          </Row>
+          <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
+            <Col className="gutter-row" xs={24} md={6}>
+              Terno
+              <Input />
+            </Col>
+            <Col className="gutter-row" xs={24} md={2}>
+              <Switch defaultChecked />
+            </Col>
+            <Col className="gutter-row" xs={24} md={4}>
+              <Input />
+            </Col>
+            <Col className="gutter-row" xs={24} md={2}>
+              <InputNumber />
+            </Col>
+            <Col className="gutter-row" xs={24} md={2}>
+              <InputNumber />
+            </Col>
+            <Col className="gutter-row" xs={24} md={4}>
+              <InputNumber />
+            </Col>
+            <Col className="gutter-row" xs={24} md={4}>
+              Config. precio
+            </Col>
+          </Row>
+          <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
+            <Col className="gutter-row" xs={24} md={6}>
+              Terno
+              <Input />
+            </Col>
+            <Col className="gutter-row" xs={24} md={2}>
+              <Switch defaultChecked />
+            </Col>
+            <Col className="gutter-row" xs={24} md={4}>
+              <Input />
+            </Col>
+            <Col className="gutter-row" xs={24} md={2}>
+              <InputNumber />
+            </Col>
+            <Col className="gutter-row" xs={24} md={2}>
+              <InputNumber />
+            </Col>
+            <Col className="gutter-row" xs={24} md={4}>
+              <InputNumber />
+            </Col>
+            <Col className="gutter-row" xs={24} md={4}>
+              Config. precio
+            </Col>
+          </Row>
         </div>
-      </Card>
-      <Form.Item>
-        <Button
-          type="primary"
-          htmlType="submit"
-          className="guardar-cliente"
-        >
-          Guardar
-        </Button>
-        <NavLink to="/clientes">
-          <Button type="danger">Cancelar</Button>
-        </NavLink>
-      </Form.Item>
-    </Form>
+        <div>
+        <div>
+          <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
+            <Col className="gutter-row" xs={24} md={12}>
+              <Form.Item
+                label="Tipo de prenda"
+                name="tipoProductoId"
+              >
+                <TextArea />
+              </Form.Item>
+            </Col>
+            <Col className="gutter-row" xs={24} md={4}>
+              <Form.Item
+                label="Tipo de prenda"
+                name="tipoProductoId"
+              >
+                <InputNumber />
+              </Form.Item>
+            </Col>
+            <Col className="gutter-row" xs={24} md={4}>
+              <Form.Item
+                label="Tipo de prenda"
+                name="tipoProductoId"
+              >
+                <InputNumber />
+              </Form.Item>
+            </Col>
+            <Col className="gutter-row" xs={24} md={4}>
+              <Checkbox>Númeración única</Checkbox>
+            </Col>
+          </Row>                  
+          
+        </div>
+          <Form.Item>
+            <Button
+              type="primary"
+              htmlType="submit"
+              className="guardar-cliente"
+            >
+              Guardar
+            </Button>
+            <NavLink to="/clientes">
+              <Button type="danger">Cancelar</Button>
+            </NavLink>
+          </Form.Item>
+        </div>
+        
+      </Form>
+    </Modal>
   );
 }
 
