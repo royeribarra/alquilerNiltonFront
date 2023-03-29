@@ -10,28 +10,24 @@ import UsuarioForm from "./usuarioForm";
 import ModalDarBaja from "./modalDarBaja";
 const {TabPane} = Tabs;
 
-function AccionesUsuario({ fetchAll })
+function AccionesUsuario({ fetchAll, refreshTable })
 {
   const [showModalFormUsuario, setShowModalFormUsuario] = useState(false);
   const [showModalBajaUsuario, setShowModalBajaUsuario] = useState(false);
-  const [usuarioId, setUsuarioId] = useState(1);
 
   const filtrarPor = (tipo) => {
     fetchAll( null, tipo);
   };
 
   const crearUsuario = () => {
-    setUsuarioId(1);
     setShowModalFormUsuario(true);
   };
   
-  const editarUsuario = (id) => {
-    setUsuarioId(2);
+  const editarUsuario = () => {
     setShowModalFormUsuario(true);
   };
 
-  const darBajaUsuario = (id) => {
-    setUsuarioId(3);
+  const darBajaUsuario = () => {
     setShowModalBajaUsuario(true);
   };
 
@@ -55,12 +51,11 @@ function AccionesUsuario({ fetchAll })
       <UsuarioForm 
         status={showModalFormUsuario}
         handleClose={setShowModalFormUsuario}
-        usuarioId={usuarioId}
+        refreshTable={refreshTable}
       />
       <ModalDarBaja 
         status={showModalBajaUsuario}
         handleClose={setShowModalBajaUsuario}
-        usuarioId={usuarioId}
       />
     </div>
   );
