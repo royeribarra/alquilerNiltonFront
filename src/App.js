@@ -86,11 +86,6 @@ function App() {
           </Route>
           <Route
             exact
-            path="/"
-            element={<Navigate to="/login" replace />}
-          />
-          <Route
-            exact
             path="*"
             element={<Navigate to="/login" replace />}
           />

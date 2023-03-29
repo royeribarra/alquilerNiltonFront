@@ -194,7 +194,7 @@ function Sidenav({ color }) {
             <span className="label">Tables</span>
           </NavLink>
         </Menu.Item> */}
-        <Menu.Item key="3">
+        {/* <Menu.Item key="3">
           <NavLink to="clientes">
             <span
               className="icon"
@@ -232,19 +232,19 @@ function Sidenav({ color }) {
             </span>
             <span className="label">Ventas</span>
           </NavLink>
-        </Menu.Item>
+        </Menu.Item> */}
         <Menu.Item key="12">
           <NavLink to="usuarios">
             <span className="icon">{signup}</span>
             <span className="label">Usuarios</span>
           </NavLink>
         </Menu.Item>
-        <Menu.Item key="13">
+        {/* <Menu.Item key="13">
           <NavLink to="caja">
             <span className="icon">{signup}</span>
             <span className="label">Caja</span>
           </NavLink>
-        </Menu.Item>
+        </Menu.Item> */}
         {/* <Menu.Item key="6">
           <NavLink to="/billing">
             <span
@@ -274,7 +274,7 @@ function Sidenav({ color }) {
         <Menu.Item className="menu-item-header" key="8">
           Account Pages
         </Menu.Item>
-        <Menu.Item key="9">
+        {/* <Menu.Item key="9">
           <NavLink to="profile">
             <span
               className="icon"
@@ -286,7 +286,7 @@ function Sidenav({ color }) {
             </span>
             <span className="label">Profile</span>
           </NavLink>
-        </Menu.Item>
+        </Menu.Item> */}
         <Menu.Item key="10">
           <Button>
             <span
