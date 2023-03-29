@@ -14,12 +14,14 @@ import {
 } from "antd";
 import "./usuarios.css";
 import { NavLink } from "react-router-dom";
+import { UsuarioService } from "../../../servicios/usuarioService";
+import { toastr } from "react-redux-toastr";
 
 const {TabPane} = Tabs;
 
-function UsuarioForm({status, handleClose, activeRows = [], usuarioId})
+function UsuarioForm({status, handleClose, refreshTable})
 {
-  console.log(usuarioId)
+  const usuarioService = new UsuarioService();
   const closeModal = () => {
     handleClose(false);
   };
@@ -29,7 +31,13 @@ function UsuarioForm({status, handleClose, activeRows = [], usuarioId})
   };
 
   const onFinish = (values) => {
-    console.log(values)
+    console.log(values);
+    usuarioService.createUser(values).then(({data})=> {
+      toastr.info(data.message);
+      refreshTable();
+    }).catch((err)=>{
+      console.log(err)
+    });
   };
   
   return(

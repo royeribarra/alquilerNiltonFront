@@ -12,9 +12,11 @@ import profesionReducer from "./reducers/profesionReducer";
 import tipoDocumentoReducer from "./reducers/tipoDocumentoReducer";
 import clienteReducer from "./reducers/clienteReducer";
 import { productosReducer } from "./reducers/productosReducer";
+import usuarioReducer from "./reducers/usuarioReducer";
 
 const reducer = combineReducers({
     cliente: clienteReducer,
+    usuario: usuarioReducer,
     grupoCliente: grupoClienteReducer,
     profesion: profesionReducer,  
     loader: loaderReducer,

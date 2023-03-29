@@ -1,107 +1,55 @@
-import React, { useState } from "react";
-import { NavLink } from "react-router-dom";
+import React, { useEffect, useState } from "react";
 import {
   Card,
   Table,
-  Button,
-  Avatar,
-  Typography,
+  Tag,
 } from "antd";
-
-const { Title } = Typography;
-
-const data1 = [
-  {
-    nombres: "royer",
-    id: 1
-  },
-  {
-    nombres: "royer1",
-    id: 2
-  },
-  {
-    nombres: "royer2",
-    id: 3
-  },
-  {
-    nombres: "royer3",
-    id: 4
-  },
-  {
-    nombres: "royer4",
-    id: 5
-  },
-  {
-    nombres: "royer5",
-    id: 6
-  },
-  {
-    nombres: "royer6",
-    id: 7
-  },
-  {
-    nombres: "royer7",
-    id: 8
-  },
-  {
-    nombres: "royer8",
-    id: 9
-  },
-  {
-    nombres: "royer9",
-    id: 10
-  },
-  {
-    nombres: "royer10",
-    id: 11
-  },
-  {
-    nombres: "royer11",
-    id: 12
-  },
-  {
-    nombres: "royer12",
-    id: 13
-  },
-  {
-    nombres: "royer13",
-    id: 14
-  },
-
-];
+import { useDispatch, useSelector } from "react-redux";
+import { UsuarioService } from "../../../servicios/usuarioService";
+import { fillTableUsers } from "../../../redux/actions/usuarioActions";
 
 const columns = [
   {
     title: "nroDoc",
-    dataIndex: "nombres",
-    key: "nombres",
-    width: "32%",
+    dataIndex: "dni",
+    key: "dni"
   },
   {
     title: "Código",
-    dataIndex: "documento",
-    key: "documento",
+    dataIndex: "codigoUsuario",
+    key: "codigoUsuario",
   },
-
   {
     title: "Nombres",
-    key: "telefono",
-    dataIndex: "telefono",
+    key: "nombres",
+    dataIndex: "nombres",
   },
   {
     title: "Apellidos",
-    key: "created_at",
-    dataIndex: "created_at",
+    key: "apellidos",
+    dataIndex: "apellidos",
   },
   {
     title: "Estado",
-    key: "estado",
-    dataIndex: "estado",
+    key: "isActive",
+    dataIndex: "isActive",
+    render: (isActive) => {
+      console.log(isActive)
+      return(
+        <Tag color={isActive ? "#87d068" : "#f50"}>
+          {isActive ? "Activo" : "Inactivo"}
+        </Tag>
+      );
+    }
   },
 ];
 
 function ListaUsuarios()
 {
+  const usuarioService = new UsuarioService();
+  const dispatch = useDispatch();
+  const state = useSelector((state) => state);
+  const { usersTable } = state.usuario;
   const[data, setData] = useState([]);
   const [selectedRowsArray, setSelectedRowKeys] = useState([]);
   const [selectedRows, setSelectedRows] = useState([]);
@@ -135,6 +83,13 @@ function ListaUsuarios()
     });
   };
 
+  useEffect(()=> {
+    usuarioService.getUsersTable().then(({data})=> {
+      console.log(data)
+      dispatch(fillTableUsers(data));
+    });
+  }, []);
+
   return(
     <div>
       <Card
@@ -145,7 +100,7 @@ function ListaUsuarios()
           <Table
             rowSelection={rowSelection}
             columns={columns}
-            dataSource={data1}
+            dataSource={usersTable}
             pagination={pagination}
             className="ant-border-space"
             onChange={fetchAll}
